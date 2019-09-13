@@ -1,0 +1,7 @@
+diff --git a/tmp/ultimo.txt b/tmp/ultimo.txt
+index 17fb1d1..c4cacbb 100644
+--- a/tmp/ultimo.txt
++++ b/tmp/ultimo.txt
+@@ -1 +1 @@
+-Y esto último en otro
++Y esto último en otro, cambiándolo para hacer pruebas
