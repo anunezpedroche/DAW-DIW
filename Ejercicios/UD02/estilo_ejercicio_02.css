@@ -1,0 +1,51 @@
+:root{
+    --body--bg--color:darkgray;
+    --text--color:black;
+    --prop--none:none;
+    --font--type:'Open Sans';
+}
+body{
+    background-color: var(--body--bg--color);
+    font-family: var(--font--type);
+}
+a{
+    color: var(--text--color);
+    text-decoration: var(--prop--none);
+}
+li{
+    display: inline-block;
+    margin-bottom: 50px;
+    margin-right:80px;
+    border:1px solid red;
+    height: 150px;
+    width: 150px;
+
+}
+header h1{
+    text-align: center;
+}
+ul{
+    list-style: var(--prop--none);
+}
+a[rel=alternate]:before{
+    content: url('flight_takeoff-24px.svg');
+}
+a[rel=next]:before{
+    content: url('flight_takeoff-24px.svg');
+}
+a[rel=tag]:before{
+    content: url('flight_takeoff-24px.svg');
+}
+a[rel=bookmark]:before{
+    content: url('flight_takeoff-24px.svg');
+    
+}
+a[rel=help]:before{
+    content: url('flight_takeoff-24px.svg');
+}
+a[rel=search]:before{
+    content: url('flight_takeoff-24px.svg');
+}
+a[rel=nofollow]:before{
+    content: url('flight_takeoff-24px.svg');
+}
