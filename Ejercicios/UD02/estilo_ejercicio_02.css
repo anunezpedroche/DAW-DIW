@@ -28,24 +28,26 @@ ul{
     list-style: var(--prop--none);
 }
 a[rel=alternate]:before{
-    content: url('flight_takeoff-24px.svg');
+    content: url('brexit.svg');
 }
 a[rel=next]:before{
-    content: url('flight_takeoff-24px.svg');
+    content: url('noticias.svg');
 }
 a[rel=tag]:before{
-    content: url('flight_takeoff-24px.svg');
+    content: url('tienda.svg');
 }
 a[rel=bookmark]:before{
-    content: url('flight_takeoff-24px.svg');
+    content: url('favoritos.svg');
+    float: left;
     
 }
 a[rel=help]:before{
-    content: url('flight_takeoff-24px.svg');
+    content: url('ayuda.svg');
 }
 a[rel=search]:before{
-    content: url('flight_takeoff-24px.svg');
+    content: url('buscar.svg');
 }
 a[rel=nofollow]:before{
-    content: url('flight_takeoff-24px.svg');
+    content: url('secreto.svg');
+    float: left;
 }
