@@ -3,6 +3,9 @@
     --text--color:black;
     --prop--none:none;
     --font--type:'Open Sans';
+    --display--type: inline-block;
+    --align--left--type:left;
+    --align--center--type:center;
 }
 body{
     background-color: var(--body--bg--color);
@@ -13,23 +16,18 @@ a{
     text-decoration: var(--prop--none);
 }
 li{
-    display: inline-block;
-    margin-bottom: 50px;
-    margin-right:80px;
-    border:1px solid red;
+    display: var(--display--type);
     height: 150px;
     width: 150px;
 
 }
 header h1{
-    text-align: center;
+    text-align: var(--align--center--type);
 }
 ul{
     list-style: var(--prop--none);
 }
-a[rel=alternate]:before{
-    content: url('brexit.svg');
-}
+
 a[rel=next]:before{
     content: url('noticias.svg');
 }
@@ -38,7 +36,7 @@ a[rel=tag]:before{
 }
 a[rel=bookmark]:before{
     content: url('favoritos.svg');
-    float: left;
+    float: var(--align--left--type);
     
 }
 a[rel=help]:before{
@@ -49,5 +47,5 @@ a[rel=search]:before{
 }
 a[rel=nofollow]:before{
     content: url('secreto.svg');
-    float: left;
+    float: var(--align--left--type);
 }
