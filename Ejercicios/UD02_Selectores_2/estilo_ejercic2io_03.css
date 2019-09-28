@@ -1,0 +1,40 @@
+:root{
+    --font--family--used: 'Open Sans';
+    --color--first--letter:red;
+    --color--first--h2:rgb(212,25,50);
+    --text--odd--number: "Satán!";
+    --text--even--number:"Alabado sea el Monstruo Espagetti Volador";
+    --color--selection--p: green;
+    --color--third--number: rgb(55,255,55);
+    --empty--value:none;
+    --absolute--value:absolute;
+    --text--color--normal:black;
+    --margin--size:5px;
+}
+body{
+    font-family: var(--font--family--used);
+}
+h2::first-letter{
+    color:var(--color--first--letter);
+}
+h2:nth-child(2){
+    color: var(--color--first--h2);
+}
+ul :nth-child(even):hover::after{
+    content:var(--text--even--number);
+    margin-left:var(--margin--size);
+}
+ul :nth-child(odd):hover::before{
+    content:var(--text--odd--number);
+    position: var(--absolute--value);
+    color:var(--text--color--normal);
+}
+ul :nth-child(3){
+    color:var(--color--third--number);
+}
+li{
+    list-style: var(--empty--value);
+}
+p::selection{
+    color:var(--color--selection--p);
+}
