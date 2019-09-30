@@ -1,0 +1,18 @@
+:root{
+
+}
+input{
+    background-color: orange;
+}
+input[type="text"]:invalid{
+    background-color: red;
+}
+input[type="submit"]{
+    border: none;
+    background-color: orange;
+    border-radius: 10px;
+    text-transform: uppercase; 
+}
+input[type="number"]:out-of-range{
+    background-color: red;
+}
