@@ -16,3 +16,15 @@ input[type="submit"]{
 input[type="number"]:out-of-range{
     background-color: red;
 }
+#dificultad:checked::after{
+    content: url('cthulhu.svg');
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+#nombre:target{
+    background-color: blue;
+}
