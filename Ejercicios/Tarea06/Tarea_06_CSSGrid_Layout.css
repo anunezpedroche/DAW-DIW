@@ -15,13 +15,18 @@ div.container{
 }
 
 .item:nth-child(odd):hover + .item:nth-child(even){
-    box-shadow: 10px 10px 10px black;
+    box-shadow: 5px 5px 0px black;
 }
 .item:nth-child(odd):hover{
-    box-shadow: 10px 10px 10px black;
+    box-shadow: 5px 5px 0px black;
 }
-#SealOfApproval {
-    content: url('cthulhu_approval.gif');
-    offset-position: 100px;
-    float: right;
+#SealOfApproval{
+    background-image: url("cthulhu_approval.gif");
+    position: fixed;
+    right: 1px;
+    bottom: 1px;
+    width: 110px;
+    height: 110px;
+    margin-right:5px;
+    margin-bottom: 5px;
 }
