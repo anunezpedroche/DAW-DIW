@@ -4,23 +4,58 @@
     grid-template-rows: repeat(16,1fr);
 
 }
-
-.pilares{
+div{
     width: 50px;
     height: 50px;
+    
+    background-size: 100% 100%;
+}
+.pilares{
     background-color: orange;
 }
 .pasillo{
-    width: 50px;
-    height: 50px;
     background-color: black;
 }
-.pabajo{
-    width: 50px;
-    height: 50px;
-    background-image: url('img/snake-der.gif');
-    background-size: 100% 100%;
+.der1{
+    background-image: url('img/snakeder2.png');
 }
-.entrada{
+.der2{
+    background-image: url('img/snakeder1.png');
+}
+.izq1{
+    background-image: url('img/snakeizq1.png');
+}
+.izq2{
+    background-image: url('img/snakeizq2.png');
+}
+.rexDer1{
+    background-image: url('img/rexDer1.png');
+}
+.rexDer2{
+    background-image: url('img/rexDer2.png');
+}
+.rexIzq1{
+    background-image: url('img/rexIzq1.png');
+}
+.rexIzq2{
+    background-image: url('img/rexIzq2.png');
+}
+.stinger{
+    background-image: url('img/stinger.png');
+}
+.tarjeta{
+    background-image: url('img/tarjeta.png');
+}
+.ray{
+    background-image: url('img/ray.png');
+}
+.caja{
+    background-image: url('img/caja.png');
+}
 
+.revelada{
+    background-color: red;
+}
+.pisado{
+    background-color: orangered;
 }
