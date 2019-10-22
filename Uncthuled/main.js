@@ -48,9 +48,12 @@ function pintarMapa(){
             if(a==heroePosicionY&&j==heroePosicionX){
                 navMap.classList.add("der1");
             }
+            if(a==0||a==1&&j!=8){
+                navMap.classList.add("muro");
+            }
             if(a%3==2||j%4==0&&a!=1&&a!=0||j==8&&mapa[3][4]!=true){
                 navMap.classList.add("pasillo");
-            }else{
+            }else if(a!=0&&a!=1){
                 navMap.classList.add("pilares");
             } 
 
@@ -291,20 +294,9 @@ function movimientoRex(){
 
 /*REVELAR COLUMNAS */
 function columnas(){
-    //--------------------------------MUESTRA STINGER---------------------------------
     
-    for(i=1;i<=3;i++){
-        for(a=3;a<=4;a++){
-            
-        }
-    }
-    
-    
-    
-    
+    /*//--------------------------------MUESTRA STINGER---------------------------------
     if(mapa[stingerY+1][stingerX].className.indexOf("pisado")>=0){
-        
-
         mapa[stingerY][stingerX].classList.add("stinger");
         mapa[stingerY][stingerX].classList.add("revelada");
         mapa[stingerY-1][stingerX].classList.add("revelada");
@@ -362,7 +354,7 @@ function columnas(){
     mapa[rayY-1][rayX+1].classList.add("revelada");
     mapa[rayY-1][rayX-1].classList.add("revelada");
     mapa[rayY][rayX+1].classList.add("revelada");
-    mapa[rayY][rayX-1].classList.add("revelada");
+    mapa[rayY][rayX-1].classList.add("revelada");*/
 }
 
 window.onload=function(){

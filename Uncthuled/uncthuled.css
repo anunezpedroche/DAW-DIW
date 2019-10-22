@@ -10,6 +10,12 @@ div{
     
     background-size: 100% 100%;
 }
+.muro{
+    background-color: coral;
+}
+.puerta{
+    background-color: gray;
+}
 .pilares{
     background-color: orange;
 }
