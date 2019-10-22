@@ -1,6 +1,10 @@
 /*-----------------------------------DEFINICIÓN VARIABLES GLOBALES------------------------------*/
 var heroePosicionX=8;
-var heroePosicionY=0;º
+var muerteRex=false;
+var heroePosicionY=0;
+var inventarioStinger=false;
+var rexPosicionX=8;
+var rexPosicionY=11;
 var mapa = new Array(15);
 var der = 0;
 var izq = 0;
@@ -101,7 +105,6 @@ function movimiento(evento){
                 mapa[heroePosicionY][heroePosicionX].classList.remove("arr1");
                 mapa[heroePosicionY][heroePosicionX].classList.remove("arr2");
                 heroePosicionY--;
-                mapa[heroePosicionY][heroePosicionX].classList.remove("columna");
 
                 mapa[heroePosicionY+1][heroePosicionX].classList.add("pisado");
                 //Movimiento GRÁFICO del personaje ARRIBA
@@ -132,7 +135,6 @@ function movimiento(evento){
 
                 //Movimiento del personaje
                 heroePosicionX++;
-                mapa[heroePosicionY][heroePosicionX].classList.remove("columna");
                 mapa[heroePosicionY][heroePosicionX-1].classList.add("pisado");
 
                 //Movimiento GRÁFICO del personaje DERECHA
@@ -161,7 +163,6 @@ function movimiento(evento){
                 mapa[heroePosicionY][heroePosicionX].classList.remove("arr1");
                 mapa[heroePosicionY][heroePosicionX].classList.remove("arr2");
                 heroePosicionX--;
-                mapa[heroePosicionY][heroePosicionX].classList.remove("columna");
 
                 mapa[heroePosicionY][heroePosicionX+1].classList.add("pisado");
                 //Movimiento GRÁFICO del personaje IZQUIERDA
@@ -186,89 +187,89 @@ function movimiento(evento){
 
 function movimientoRex(){
     
-    while(rexPosicionX!=heroePosicionX||rexPosicionY!=heroePosicionY){
+   if(muerteRex==true){
+       inventarioStinger = false;
+   }else{
+    var cas = Math.floor(Math.random()*4);
+    if (cas==0){
+        if(mapa[rexPosicionY][rexPosicionX-1].className.indexOf("pasillo")>=0){
+    
+            mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq1");
+            mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq2");
+            //Elimina posición en X-
+            rexPosicionX--;
+            console.log("Y "+rexPosicionY+" X "+rexPosicionX);
+            //mapa[rexPosicionY][rexPosicionX-1].classList.add("pasillo");
+            //Movimiento GRÁFICO del personaje IZQUIERDA
+            mapa[rexPosicionY][rexPosicionX].classList.add("rexIzq1");
+            
+        }
+    }else if(cas==1){
+        if(mapa[rexPosicionY][rexPosicionX+1].className.indexOf("pasillo")>=0){
+         
+            mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq1");
+            mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq2");
+
+            rexPosicionX++;
+            console.log("Y "+rexPosicionY+" X "+rexPosicionX);
+            //mapa[rexPosicionY][rexPosicionX+1].classList.add("pasillo");
+            //Movimiento GRÁFICO del personaje IZQUIERDA
+          
+                mapa[rexPosicionY][rexPosicionX].classList.add("rexIzq1");
+         
+        }
+    }else if(cas==2){
+        if(mapa[rexPosicionY-1][rexPosicionX].className.indexOf("pasillo")>=0){
+    
+            mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq1");
+            mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq2");
+
+            rexPosicionY--;
+            console.log("Y "+rexPosicionY+" X "+rexPosicionX);
+
+           // mapa[rexPosicionY-1][rexPosicionX].classList.add("pasillo");
+            //Movimiento GRÁFICO del personaje IZQUIERDA
+         
+                mapa[rexPosicionY][rexPosicionX].classList.add("rexIzq1");
+            
+        }
+    }else if (cas==3){
+        if(mapa[rexPosicionY+1][rexPosicionX].className.indexOf("pasillo")>=0){
+     
+            mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq1");
+            mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq2");
+
+            rexPosicionY++;
+            //mapa[rexPosicionY+1][rexPosicionX].classList.add("pasillo");
+            console.log("Y "+rexPosicionY+" X "+rexPosicionX);
+                mapa[rexPosicionY][rexPosicionX].classList.add("rexIzq1");
+              
+        }
+    }
+    if(heroePosicionX==rexPosicionX&&heroePosicionY==rexPosicionY&&inventarioStinger==true){
+        muerteRex = true;
+        
+    }
+    
+   }
     
 
-        var cas = Math.floor(Math.random()*4);
-        if (cas==0){
-            if(mapa[rexPosicionY][rexPosicionX-1].className.indexOf("pasillo")>=0){
-        
-                mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq1");
-                mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq2");
-                //Elimina posición en X-
-                rexPosicionX--;
-                console.log('X '+rexPosicionY);
-
-                //mapa[rexPosicionY][rexPosicionX-1].classList.add("pasillo");
-                //Movimiento GRÁFICO del personaje IZQUIERDA
-                
-                    mapa[rexPosicionY][rexPosicionX].classList.add("rexIzq1");
-                
-            }
-        }else if(cas==1){
-            if(mapa[rexPosicionY][rexPosicionX+1].className.indexOf("pasillo")>=0){
-             
-                mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq1");
-                mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq2");
-
-                rexPosicionX++;
-                console.log('X '+rexPosicionX);
-
-                //mapa[rexPosicionY][rexPosicionX+1].classList.add("pasillo");
-                //Movimiento GRÁFICO del personaje IZQUIERDA
-              
-                    mapa[rexPosicionY][rexPosicionX].classList.add("rexIzq1");
-             
-            }
-        }else if(cas==2){
-            if(mapa[rexPosicionY-1][rexPosicionX].className.indexOf("pasillo")>=0){
-        
-                mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq1");
-                mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq2");
-
-                rexPosicionY--;
-                console.log('Y '+rexPosicionY);
-
-               // mapa[rexPosicionY-1][rexPosicionX].classList.add("pasillo");
-                //Movimiento GRÁFICO del personaje IZQUIERDA
-             
-                    mapa[rexPosicionY][rexPosicionX].classList.add("rexIzq1");
-                
-            }
-        }else if (cas==3){
-            if(mapa[rexPosicionY+1][rexPosicionX].className.indexOf("pasillo")>=0){
-         
-                mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq1");
-                mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq2");
-
-                rexPosicionY++;
-                console.log('Y '+rexPosicionY);
-                //mapa[rexPosicionY+1][rexPosicionX].classList.add("pasillo");
-                
-                    mapa[rexPosicionY][rexPosicionX].classList.add("rexIzq1");
-                  
-            }
-        }
-        }
+ 
     }
 
     function columnas(){
         //--------------------------------MUESTRA STINGER---------------------------------
-        if(mapa[tarjetaY+1][tarjetaX].className.indexOf("pisado")>=0){
-            //mapa[stingerY-1][stingerX].classList.remove("columna");
-            //mapa[stingerY-1][stingerX+1].classList.remove("columna");
-            //mapa[stingerY-1][stingerX-1].classList.remove("columna");
-            //mapa[stingerY][stingerX+1].classList.remove("columna");
-            //mapa[stingerY][stingerX-1].classList.remove("columna");
-            //mapa[stingerY][stingerX].classList.remove("columna");
+        if(mapa[stingerY+1][stingerX].className.indexOf("pisado")>=0){
+            
     
             mapa[stingerY][stingerX].classList.add("stinger");
-            //mapa[stingerY][stingerX].classList.add("revelada");
-            //mapa[stingerY-1][stingerX].classList.add("revelada");
-            //mapa[stingerY-1][stingerX+1].classList.add("revelada");
-            //mapa[stingerY-1][stingerX-1].classList.add("revelada");
-            //mapa[stingerY][stingerX+1].classList.add("revelada");
-            //mapa[stingerY][stingerX-1].classList.add("revelada");
+            mapa[stingerY][stingerX].classList.add("revelada");
+            mapa[stingerY-1][stingerX].classList.add("revelada");
+            mapa[stingerY-1][stingerX+1].classList.add("revelada");
+            mapa[stingerY-1][stingerX-1].classList.add("revelada");
+            mapa[stingerY][stingerX+1].classList.add("revelada");
+            mapa[stingerY][stingerX-1].classList.add("revelada");
+            inventarioStinger=true;
         }
 
 
@@ -323,6 +324,12 @@ function movimientoRex(){
 
 window.onload=function(){
     pintarMapa();
+    setInterval(columnas,10);
+    if(muerteRex!=true){
+
+        setInterval(movimientoRex,300);   
+        console.log("Hola "+heroePosicionX);
+    }else{
+    }  
     
-    setInterval(movimientoRex,500); 
 }
