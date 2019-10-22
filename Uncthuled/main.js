@@ -189,6 +189,11 @@ function movimientoRex(){
     
    if(muerteRex==true){
        inventarioStinger = false;
+
+       mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq1");
+       mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq2");
+       mapa[rexPosicionY][rexPosicionX].classList.remove("rexDer1");
+       mapa[rexPosicionY][rexPosicionX].classList.remove("rexDer2");    
    }else{
     var cas = Math.floor(Math.random()*4);
     if (cas==0){
@@ -196,12 +201,18 @@ function movimientoRex(){
     
             mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq1");
             mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq2");
+            mapa[rexPosicionY][rexPosicionX].classList.remove("rexDer1");
+            mapa[rexPosicionY][rexPosicionX].classList.remove("rexDer2");
             //Elimina posición en X-
             rexPosicionX--;
-            console.log("Y "+rexPosicionY+" X "+rexPosicionX);
-            //mapa[rexPosicionY][rexPosicionX-1].classList.add("pasillo");
-            //Movimiento GRÁFICO del personaje IZQUIERDA
-            mapa[rexPosicionY][rexPosicionX].classList.add("rexIzq1");
+            
+            if(rizq==0){
+                mapa[rexPosicionY][rexPosicionX].classList.add("rexIzq1");
+                rizq=1;
+            }else{
+                mapa[rexPosicionY][rexPosicionX].classList.add("rexIzq2");
+                rizq=0;
+            }
             
         }
     }else if(cas==1){
@@ -209,28 +220,34 @@ function movimientoRex(){
          
             mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq1");
             mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq2");
+            mapa[rexPosicionY][rexPosicionX].classList.remove("rexDer1");
+            mapa[rexPosicionY][rexPosicionX].classList.remove("rexDer2");
 
             rexPosicionX++;
-            console.log("Y "+rexPosicionY+" X "+rexPosicionX);
-            //mapa[rexPosicionY][rexPosicionX+1].classList.add("pasillo");
-            //Movimiento GRÁFICO del personaje IZQUIERDA
-          
-                mapa[rexPosicionY][rexPosicionX].classList.add("rexIzq1");
-         
+            if(rder==0){
+                mapa[rexPosicionY][rexPosicionX].classList.add("rexDer1");
+                rder=1;
+            }else{
+                mapa[rexPosicionY][rexPosicionX].classList.add("rexDer2");
+                rder=0;
+            }
         }
     }else if(cas==2){
         if(mapa[rexPosicionY-1][rexPosicionX].className.indexOf("pasillo")>=0){
     
             mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq1");
             mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq2");
+            mapa[rexPosicionY][rexPosicionX].classList.remove("rexDer1");
+            mapa[rexPosicionY][rexPosicionX].classList.remove("rexDer2");
 
             rexPosicionY--;
-            console.log("Y "+rexPosicionY+" X "+rexPosicionX);
-
-           // mapa[rexPosicionY-1][rexPosicionX].classList.add("pasillo");
-            //Movimiento GRÁFICO del personaje IZQUIERDA
-         
+            if(rarr==0){
+                mapa[rexPosicionY][rexPosicionX].classList.add("rexDer1");
+                rarr=1;
+            }else{
                 mapa[rexPosicionY][rexPosicionX].classList.add("rexIzq1");
+                rarr=0;
+            }
             
         }
     }else if (cas==3){
@@ -238,12 +255,17 @@ function movimientoRex(){
      
             mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq1");
             mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq2");
-
+            mapa[rexPosicionY][rexPosicionX].classList.remove("rexDer1");
+            mapa[rexPosicionY][rexPosicionX].classList.remove("rexDer2");
             rexPosicionY++;
-            //mapa[rexPosicionY+1][rexPosicionX].classList.add("pasillo");
-            console.log("Y "+rexPosicionY+" X "+rexPosicionX);
+            
+            if(rabj==0){
                 mapa[rexPosicionY][rexPosicionX].classList.add("rexIzq1");
-              
+                rabj=1;
+            }else{
+                mapa[rexPosicionY][rexPosicionX].classList.add("rexDer1");
+                rabj=0;
+            }
         }
     }
     if(heroePosicionX==rexPosicionX&&heroePosicionY==rexPosicionY&&inventarioStinger==true){
@@ -325,11 +347,6 @@ function movimientoRex(){
 window.onload=function(){
     pintarMapa();
     setInterval(columnas,10);
-    if(muerteRex!=true){
-
         setInterval(movimientoRex,300);   
-        console.log("Hola "+heroePosicionX);
-    }else{
-    }  
     
 }
