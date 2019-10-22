@@ -1,10 +1,20 @@
-/*-----------------------------------DEFINICIÓN VARIABLES GLOBALES------------------------------*/
+/*
+-----------------------------------------TODO LIST-------------------------------------------
+1- REVELAR COLUMNAS
+2- RANDOMIZAR OBJETOS
+3- RANDOMIZAR REX
+4- SEPARAR PINTAR REX DE MOVER REX
+5- AÑADIR OTRO REX/RAY
+6- MEJORAR INTERFAZ
+7- LIMPIAR CÓDIGO
+
+-----------------------------------DEFINICIÓN VARIABLES GLOBALES------------------------------*/
 var heroePosicionX=8;
 var muerteRex=false;
 var heroePosicionY=0;
 var inventarioStinger=false;
-var rexPosicionX=8;
-var rexPosicionY=11;
+var rexPosicionX=20;
+var rexPosicionY=14;
 var mapa = new Array(15);
 var der = 0;
 var izq = 0;
@@ -23,6 +33,7 @@ var cajaX = 6;
 var cajaY = 4;
 var rayX = 6;
 var rayY = 7;
+// DEFINICIÓN ARRAY MAPA
 for(var i = 0;i<mapa.length;i++){
     mapa[i] = new Array(21);
 }
@@ -193,7 +204,7 @@ function movimientoRex(){
        mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq1");
        mapa[rexPosicionY][rexPosicionX].classList.remove("rexIzq2");
        mapa[rexPosicionY][rexPosicionX].classList.remove("rexDer1");
-       mapa[rexPosicionY][rexPosicionX].classList.remove("rexDer2");    
+       mapa[rexPosicionY][rexPosicionX].classList.remove("rexDer2");
    }else{
     var cas = Math.floor(Math.random()*4);
     if (cas==0){
@@ -270,79 +281,89 @@ function movimientoRex(){
     }
     if(heroePosicionX==rexPosicionX&&heroePosicionY==rexPosicionY&&inventarioStinger==true){
         muerteRex = true;
-        
     }
     
    }
     
 
  
-    }
+}
 
-    function columnas(){
-        //--------------------------------MUESTRA STINGER---------------------------------
-        if(mapa[stingerY+1][stingerX].className.indexOf("pisado")>=0){
-            
+/*REVELAR COLUMNAS */
+function columnas(){
+    //--------------------------------MUESTRA STINGER---------------------------------
     
-            mapa[stingerY][stingerX].classList.add("stinger");
-            mapa[stingerY][stingerX].classList.add("revelada");
-            mapa[stingerY-1][stingerX].classList.add("revelada");
-            mapa[stingerY-1][stingerX+1].classList.add("revelada");
-            mapa[stingerY-1][stingerX-1].classList.add("revelada");
-            mapa[stingerY][stingerX+1].classList.add("revelada");
-            mapa[stingerY][stingerX-1].classList.add("revelada");
-            inventarioStinger=true;
+    for(i=1;i<=3;i++){
+        for(a=3;a<=4;a++){
+            
         }
-
-
-        //------------------------------MUESTRA TARJETA---------------------------------------
-        mapa[tarjetaY-1][tarjetaX].classList.remove("columna");
-        mapa[tarjetaY-1][tarjetaX+1].classList.remove("columna");
-        mapa[tarjetaY-1][tarjetaX-1].classList.remove("columna");
-        mapa[tarjetaY][tarjetaX+1].classList.remove("columna");
-        mapa[tarjetaY][tarjetaX-1].classList.remove("columna");
-        mapa[tarjetaY][tarjetaX].classList.remove("columna");
-
-        mapa[tarjetaY][tarjetaX].classList.add("tarjeta");
-        mapa[tarjetaY][tarjetaX].classList.add("revelada");
-        mapa[tarjetaY-1][tarjetaX].classList.add("revelada");
-        mapa[tarjetaY-1][tarjetaX+1].classList.add("revelada");
-        mapa[tarjetaY-1][tarjetaX-1].classList.add("revelada");
-        mapa[tarjetaY][tarjetaX+1].classList.add("revelada");
-        mapa[tarjetaY][tarjetaX-1].classList.add("revelada");
-
-        //--------------------------------MUESTRA CAJA CARTÓN----------------------------------
-        mapa[cajaY-1][cajaX].classList.remove("columna");
-        mapa[cajaY-1][cajaX+1].classList.remove("columna");
-        mapa[cajaY-1][cajaX-1].classList.remove("columna");
-        mapa[cajaY][cajaX+1].classList.remove("columna");
-        mapa[cajaY][cajaX-1].classList.remove("columna");
-        mapa[cajaY][cajaX].classList.remove("columna");
-
-        mapa[cajaY][cajaX].classList.add("caja");
-        mapa[cajaY][cajaX].classList.add("revelada");
-        mapa[cajaY-1][cajaX].classList.add("revelada");
-        mapa[cajaY-1][cajaX+1].classList.add("revelada");
-        mapa[cajaY-1][cajaX-1].classList.add("revelada");
-        mapa[cajaY][cajaX+1].classList.add("revelada");
-        mapa[cajaY][cajaX-1].classList.add("revelada");
-
-        //-------------------------------MUESTRA OTRO METAL GEAR--------------------------------
-        mapa[rayY-1][rayX].classList.remove("columna");
-        mapa[rayY-1][rayX+1].classList.remove("columna");
-        mapa[rayY-1][rayX-1].classList.remove("columna");
-        mapa[rayY][rayX+1].classList.remove("columna");
-        mapa[rayY][rayX-1].classList.remove("columna");
-        mapa[rayY][rayX].classList.remove("columna");
-
-        mapa[rayY][rayX].classList.add("ray");
-        mapa[rayY][rayX].classList.add("revelada");
-        mapa[rayY-1][rayX].classList.add("revelada");
-        mapa[rayY-1][rayX+1].classList.add("revelada");
-        mapa[rayY-1][rayX-1].classList.add("revelada");
-        mapa[rayY][rayX+1].classList.add("revelada");
-        mapa[rayY][rayX-1].classList.add("revelada");
     }
+    
+    
+    
+    
+    if(mapa[stingerY+1][stingerX].className.indexOf("pisado")>=0){
+        
+
+        mapa[stingerY][stingerX].classList.add("stinger");
+        mapa[stingerY][stingerX].classList.add("revelada");
+        mapa[stingerY-1][stingerX].classList.add("revelada");
+        mapa[stingerY-1][stingerX+1].classList.add("revelada");
+        mapa[stingerY-1][stingerX-1].classList.add("revelada");
+        mapa[stingerY][stingerX+1].classList.add("revelada");
+        mapa[stingerY][stingerX-1].classList.add("revelada");
+        inventarioStinger=true;
+    }
+
+
+    //------------------------------MUESTRA TARJETA---------------------------------------
+    mapa[tarjetaY-1][tarjetaX].classList.remove("columna");
+    mapa[tarjetaY-1][tarjetaX+1].classList.remove("columna");
+    mapa[tarjetaY-1][tarjetaX-1].classList.remove("columna");
+    mapa[tarjetaY][tarjetaX+1].classList.remove("columna");
+    mapa[tarjetaY][tarjetaX-1].classList.remove("columna");
+    mapa[tarjetaY][tarjetaX].classList.remove("columna");
+
+    mapa[tarjetaY][tarjetaX].classList.add("tarjeta");
+    mapa[tarjetaY][tarjetaX].classList.add("revelada");
+    mapa[tarjetaY-1][tarjetaX].classList.add("revelada");
+    mapa[tarjetaY-1][tarjetaX+1].classList.add("revelada");
+    mapa[tarjetaY-1][tarjetaX-1].classList.add("revelada");
+    mapa[tarjetaY][tarjetaX+1].classList.add("revelada");
+    mapa[tarjetaY][tarjetaX-1].classList.add("revelada");
+
+    //--------------------------------MUESTRA CAJA CARTÓN----------------------------------
+    mapa[cajaY-1][cajaX].classList.remove("columna");
+    mapa[cajaY-1][cajaX+1].classList.remove("columna");
+    mapa[cajaY-1][cajaX-1].classList.remove("columna");
+    mapa[cajaY][cajaX+1].classList.remove("columna");
+    mapa[cajaY][cajaX-1].classList.remove("columna");
+    mapa[cajaY][cajaX].classList.remove("columna");
+
+    mapa[cajaY][cajaX].classList.add("caja");
+    mapa[cajaY][cajaX].classList.add("revelada");
+    mapa[cajaY-1][cajaX].classList.add("revelada");
+    mapa[cajaY-1][cajaX+1].classList.add("revelada");
+    mapa[cajaY-1][cajaX-1].classList.add("revelada");
+    mapa[cajaY][cajaX+1].classList.add("revelada");
+    mapa[cajaY][cajaX-1].classList.add("revelada");
+
+    //-------------------------------MUESTRA OTRO METAL GEAR--------------------------------
+    mapa[rayY-1][rayX].classList.remove("columna");
+    mapa[rayY-1][rayX+1].classList.remove("columna");
+    mapa[rayY-1][rayX-1].classList.remove("columna");
+    mapa[rayY][rayX+1].classList.remove("columna");
+    mapa[rayY][rayX-1].classList.remove("columna");
+    mapa[rayY][rayX].classList.remove("columna");
+
+    mapa[rayY][rayX].classList.add("ray");
+    mapa[rayY][rayX].classList.add("revelada");
+    mapa[rayY-1][rayX].classList.add("revelada");
+    mapa[rayY-1][rayX+1].classList.add("revelada");
+    mapa[rayY-1][rayX-1].classList.add("revelada");
+    mapa[rayY][rayX+1].classList.add("revelada");
+    mapa[rayY][rayX-1].classList.add("revelada");
+}
 
 window.onload=function(){
     pintarMapa();
