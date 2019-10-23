@@ -292,11 +292,65 @@ function movimientoRex(){
  
 }
 
+
+function revelarPilar(posY,posX){
+    // Y fila
+    // X columna
+    revelado=false
+
+    if (!mapa[posY-1][posX].classList.contains("pisado")){
+        return revelado;
+    }
+    if (!mapa[posY-1][posX+1].classList.contains("pisado")){
+        return revelado;
+    }
+    if (!mapa[posY-1][posX+2].classList.contains("pisado")){
+        return revelado;
+    }
+    if (!mapa[posY-1][posX+3].classList.contains("pisado")){
+        return revelado;
+    }
+    if (!mapa[posY-1][posX-1].classList.contains("pisado")){
+        return revelado;
+    }
+    if (!mapa[posY+2][posX].classList.contains("pisado")){
+        return revelado;
+    }
+    if (!mapa[posY+2][posX+1].classList.contains("pisado")){
+        return revelado;
+    }
+    if (!mapa[posY+2][posX+2].classList.contains("pisado")){
+        return revelado;
+    }
+    if (!mapa[posY+2][posX+3].classList.contains("pisado")){
+        return revelado;
+    }
+    if (!mapa[posY+2][posX-1].classList.contains("pisado")){
+        return revelado;
+    }
+    if (!mapa[posY][posX-1].classList.contains("pisado")){
+        return revelado;
+    }
+    if (!mapa[posY+1][posX-1].classList.contains("pisado")){
+        return revelado;
+    }
+    if (!mapa[posY][posX+3].classList.contains("pisado")){
+        return revelado;
+    }
+    if (!mapa[posY+1][posX+3].classList.contains("pisado")){
+        return revelado;
+    }
+
+
+    return true;
+
+}
+
+
+
 /*REVELAR COLUMNAS */
 function columnas(){
-    
-    /*//--------------------------------MUESTRA STINGER---------------------------------
-    if(mapa[stingerY+1][stingerX].className.indexOf("pisado")>=0){
+    if(revelarPilar(3,1)==true){
         mapa[stingerY][stingerX].classList.add("stinger");
         mapa[stingerY][stingerX].classList.add("revelada");
         mapa[stingerY-1][stingerX].classList.add("revelada");
@@ -305,6 +359,10 @@ function columnas(){
         mapa[stingerY][stingerX+1].classList.add("revelada");
         mapa[stingerY][stingerX-1].classList.add("revelada");
         inventarioStinger=true;
+    }
+    //--------------------------------MUESTRA STINGER---------------------------------
+    if(mapa[stingerY+1][stingerX].className.indexOf("pisado")>=0){
+        
     }
 
 
@@ -354,12 +412,12 @@ function columnas(){
     mapa[rayY-1][rayX+1].classList.add("revelada");
     mapa[rayY-1][rayX-1].classList.add("revelada");
     mapa[rayY][rayX+1].classList.add("revelada");
-    mapa[rayY][rayX-1].classList.add("revelada");*/
+    mapa[rayY][rayX-1].classList.add("revelada");
 }
 
 window.onload=function(){
     pintarMapa();
     setInterval(columnas,10);
-        setInterval(movimientoRex,300);   
+    setInterval(movimientoRex,300);   
     
 }
