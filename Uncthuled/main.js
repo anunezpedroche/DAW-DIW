@@ -33,6 +33,8 @@ var cajaX = 6;
 var cajaY = 4;
 var rayX = 6;
 var rayY = 7;
+var pilY= 3;
+var pilX=1;
 // DEFINICIÓN ARRAY MAPA
 for(var i = 0;i<mapa.length;i++){
     mapa[i] = new Array(21);
@@ -68,7 +70,7 @@ function pintarMapa(){
 /*-------------------------------------MOVIMIENTO DEL PERSONAJE----------------------------------------------*/
 
 function movimiento(evento){
-
+    
     var posAntHX = heroePosicionX;
     var posAntHY = heroePosicionY;
 
@@ -101,7 +103,7 @@ function movimiento(evento){
                     abj=0;
                 }
             }
-
+            columnas();
             break;
             //Arriba
             case "w":
@@ -130,6 +132,8 @@ function movimiento(evento){
                     arr=1;
                 }
             }
+            columnas();
+        
             break;
             //Derecha
             case "d":
@@ -160,6 +164,7 @@ function movimiento(evento){
                     der=1;
                 }
             }
+            columnas();
             break;
             //Izquierda
             case "a":
@@ -187,7 +192,9 @@ function movimiento(evento){
                     mapa[heroePosicionY][heroePosicionX].classList.add("izq2");
                     izq=1;
                 }
+                
             }
+            columnas();
             break;
         default:
     break;
@@ -297,7 +304,6 @@ function revelarPilar(posY,posX){
     // Y fila
     // X columna
     revelado=false
-
     if (!mapa[posY-1][posX].classList.contains("pisado")){
         return revelado;
     }
@@ -340,7 +346,7 @@ function revelarPilar(posY,posX){
     if (!mapa[posY+1][posX+3].classList.contains("pisado")){
         return revelado;
     }
-
+    
 
     return true;
 
@@ -350,18 +356,39 @@ function revelarPilar(posY,posX){
 
 /*REVELAR COLUMNAS */
 function columnas(){
-    if(revelarPilar(3,1)==true){
-        mapa[stingerY][stingerX].classList.add("stinger");
-        mapa[stingerY][stingerX].classList.add("revelada");
-        mapa[stingerY-1][stingerX].classList.add("revelada");
-        mapa[stingerY-1][stingerX+1].classList.add("revelada");
-        mapa[stingerY-1][stingerX-1].classList.add("revelada");
-        mapa[stingerY][stingerX+1].classList.add("revelada");
-        mapa[stingerY][stingerX-1].classList.add("revelada");
-        inventarioStinger=true;
+    
+
+    for(fil=0;fil<5;fil++){
+        for(col=0;col<5;col++){
+            if(pilY>=18){
+                pilY=3;
+            }
+            if(pilX>=25){
+                pilX=1;
+            }
+            if(revelarPilar(pilY,pilX)==true){
+                mapa[pilY+1][pilX+1].classList.add("stinger");
+                mapa[pilY+1][pilX+2].classList.add("revelada");
+                mapa[pilY][pilX+1].classList.add("revelada");
+                mapa[pilY][pilX+2].classList.add("revelada");
+                mapa[pilY][pilX].classList.add("revelada");
+                mapa[pilY+1][pilX].classList.add("revelada");
+                mapa[pilY+1][pilX+1].classList.add("revelada");
+                inventarioStinger=true;
+
+            }
+            console.log(pilX);
+            console.log(pilY);
+            console.log(revelarPilar(pilY,pilX));
+            pilX +=4;
+        }
+        pilX = 1;
+        pilY +=3;
     }
+
+  
     //--------------------------------MUESTRA STINGER---------------------------------
-    if(mapa[stingerY+1][stingerX].className.indexOf("pisado")>=0){
+    /*if(mapa[stingerY+1][stingerX].className.indexOf("pisado")>=0){
         
     }
 
@@ -412,12 +439,12 @@ function columnas(){
     mapa[rayY-1][rayX+1].classList.add("revelada");
     mapa[rayY-1][rayX-1].classList.add("revelada");
     mapa[rayY][rayX+1].classList.add("revelada");
-    mapa[rayY][rayX-1].classList.add("revelada");
+    mapa[rayY][rayX-1].classList.add("revelada");*/
 }
 
 window.onload=function(){
     pintarMapa();
-    setInterval(columnas,10);
+    
     setInterval(movimientoRex,300);   
     
 }
