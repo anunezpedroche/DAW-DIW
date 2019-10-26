@@ -1,67 +1,111 @@
-#mapa{
-    display: grid;
-    grid-template-columns: repeat(21,1fr);
-    grid-template-rows: repeat(16,1fr);
+.pantalla {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
 
+#mapa {
+    display: grid;
+    grid-template-columns: repeat(21, 1fr);
+    grid-template-rows: repeat(16, 1fr);
+    grid-area: auto;
 }
-div{
-    width: 50px;
-    height: 50px;
-    
-    background-size: 100% 100%;
+
+body {
+    background-color: yellow;
+    background-size: 100vw 100vh;
+    background-attachment: fixed;
+    margin: 0;
 }
-.muro{
+
+.muro {
+    width: 40px;
+    height: 40px;
     background-color: coral;
 }
-.puerta{
+
+.puerta {
+    width: 40px;
+    height: 40px;
     background-color: gray;
 }
-.pilares{
+
+.pilares {
+    width: 40px;
+    height: 40px;
     background-color: orange;
 }
-.pasillo{
+
+.pasillo {
+    width: 40px;
+    height: 40px;
     background-color: black;
 }
-.der1{
-    background-image: url('img/snakeder2.png');
-}
-.der2{
-    background-image: url('img/snakeder1.png');
-}
-.izq1{
-    background-image: url('img/snakeizq1.png');
-}
-.izq2{
-    background-image: url('img/snakeizq2.png');
-}
-.rexDer1{
-    background-image: url('img/rexDer1.png');
-}
-.rexDer2{
-    background-image: url('img/rexDer2.png');
-}
-.rexIzq1{
-    background-image: url('img/rexIzq1.png');
-}
-.rexIzq2{
-    background-image: url('img/rexIzq2.png');
-}
-.stinger{
-    background-image: url('img/stinger.png');
-}
-.tarjeta{
-    background-image: url('img/tarjeta.png');
-}
-.ray{
-    background-image: url('img/ray.png');
-}
-.caja{
-    background-image: url('img/caja.png');
+
+.der1 {
+    content: url('img/snakeder2.png');
 }
 
-.revelada{
+.der2 {
+    content: url('img/snakeder1.png');
+}
+
+.izq1 {
+    content: url('img/snakeizq1.png');
+}
+
+.izq2 {
+    content: url('img/snakeizq2.png');
+}
+
+.rexDer1 {
+    content: url('img/rexDer1.png');
+}
+
+.rexDer2 {
+    content: url('img/rexDer2.png');
+}
+
+.rexIzq1 {
+    width: 40px;
+    height: 40px;
+    content: url('img/rexIzq1.png');
+}
+
+.rexIzq2 {
+    content: url('img/rexIzq2.png');
+}
+
+.stinger {
+    width: 40px;
+    height: 40px;
+    content: url('img/stinger.png');
+}
+
+.tarjeta {
+    width: 40px;
+    height: 40px;
+    content: url('img/tarjeta.png');
+}
+
+.ray {
+    width: 40px;
+    height: 40px;
+    content: url('img/ray.png');
+}
+
+.caja {
+    width: 40px;
+    height: 40px;
+    content: url('img/caja.png');
+}
+
+.revelada {
+    width: 40px;
+    height: 40px;
     background-color: red;
 }
-.pisado{
+
+.pisado {
     background-color: orangered;
 }
