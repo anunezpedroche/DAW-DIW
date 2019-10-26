@@ -46,24 +46,55 @@ for (var i = 0; i < mapa.length; i++) {
     mapa[i] = new Array(21);
 }
 function randomizarObjetos(){
+    var counter = 20;
     let objetos = new Array();
-    
-    
-    for (var fil = 0; fil < 5; fil++) {
-        for (var col = 0; col < 6; col++) {
+    for (var fil = 0; fil < 4; fil++) {
+        for (var col = 0; col < 5; col++) {
+
+    let randomizer = Math.floor(Math.random()*4);
+            console.log(randomizer);
+            console.log(pilX,pilY);
+            if(pilY>14){
+                pilY=3;
+            }
+            if(pilX>17){
+                pilX=4;
+            }
+        if(randomizer==0){
             stingerY = pilY+1;
             stingerX = pilX+1;
+            pilY += 3;
+            
+        }
+        if(randomizer==1){
+            tarjetaX=pilX+1;
+            tarjetaY=pilY+1;
+            pilY+= 3;
+            
+        }
+        if(randomizer==2){
+            rayX=pilX+1;
+            rayY=pilY+1;
             pilX += 4;
-            console.log(stingerY);
+            
+        }
+        if(randomizer==3){
+            cajaX=pilX+1;
+            cajaY=pilY+1;
+            pilX += 4;
+            
+        }
         }
         pilX = 1;
         pilY += 3;
+        counter--;
     }
+
 }
 
 /*------------------------------------PINTA EL MAPA------------------------------------------- */
 function pintarMapa() {
-    
+
     for (var a = 0; a < mapa.length; a++) {
         for (var j = 0; j < mapa[a].length; j++) {
             var navMap = document.createElement("div");
@@ -287,7 +318,7 @@ function columnas() {
 
                 }
                 if (rayY == pilY + 1 && rayX == pilX + 1&&ray==false) {
-                    mapa[pilY + 1][pilX + 1].classList.add("ray");
+                    mapa[pilY + 1][pilX + 1].classList.add("rexIzq1");
                     anyadirRex();
                     ray = true;
 
