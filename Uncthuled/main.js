@@ -13,20 +13,13 @@ import Rex from './js/rex.js';
 var arrayVillanos = new Array();
 var heroePosicionX = 8;
 var muerteRex = false;
-var heroePosicionY = 0;
+var heroePosicionY = 1;
 let inventarioStinger = false;
-var rexPosicionX = 20;
-var rexPosicionY = 14;
 var mapa = new Array(15);
 var der = 0;
 var izq = 0;
 var abj = 0;
 var arr = 0;
-var rder = 0;
-var rizq = 0;
-var rabj = 0;
-var rarr = 0;
-var count = 0;
 var stingerX = 2;
 var stingerY = 4;
 var tarjetaX = 2;
@@ -42,8 +35,11 @@ let inventarioCaja=false;
 let inventarioTarjeta= false;
 let ray = false;
 // DEFINICIÓN ARRAY MAPA
-for (var i = 0; i < mapa.length; i++) {
-    mapa[i] = new Array(21);
+function crearMapa(){
+    for (var i = 0; i < mapa.length; i++) {
+        mapa[i] = new Array(21);
+}
+
 }
 function randomizarObjetos(){
     var counter = 20;
@@ -101,15 +97,18 @@ function pintarMapa() {
             if (a == heroePosicionY && j == heroePosicionX) {
                 navMap.classList.add("der1");
             }
-            if (a == 0 || a == 1 && j != 8) {
-                navMap.classList.add("muro");
-            }
-            if (a % 3 == 2 || j % 4 == 0 && a != 1 && a != 0 || j == 8 && mapa[3][4] != true) {
+
+            if (a % 3 == 2 || j % 4 == 0 && a != 1 && a != 0 || j == 8 && mapa[3][4] != true && a!=0) {
                 navMap.classList.add("pasillo");
             } else if (a != 0 && a != 1) {
                 navMap.classList.add("pilares");
+            }else if(a==0||a==1 && j!=8){
+                navMap.classList.add("pilares");
             }
-
+            if (a==0&&j==8) {
+                navMap.classList.remove("pilares");
+                navMap.classList.add("puerta");
+            }
             document.getElementById("mapa").appendChild(navMap);
             mapa[a][j] = navMap;
             document.onkeydown = movimiento;
@@ -135,7 +134,12 @@ function borrarPersonaje(){
 /*-------------------------------------MOVIMIENTO DEL PERSONAJE----------------------------------------------*/
 
 function movimiento(evento) {
-
+    if(heroePosicionX==8&&heroePosicionY==0){
+        borrarTodo();
+        crearMapa();
+        randomizarObjetos();
+        pintarMapa();
+    }
     var posAntHX = heroePosicionX;
     var posAntHY = heroePosicionY;
 
@@ -285,6 +289,11 @@ function revelarPilar(posY, posX) {
 
 
 function columnas() {
+    if(inventarioTarjeta==true&&inventarioCaja==true){
+        console.log("hola");
+        mapa[0][8].classList.remove("puerta");
+        mapa[0][8].classList.add("pasillo");
+    }
     var fil = 0;
     var col = 0;
     for (fil = 0; fil < 5; fil++) {
@@ -311,10 +320,14 @@ function columnas() {
                 }
                 if (tarjetaY == pilY + 1 && tarjetaX == pilX + 1&&inventarioTarjeta==false) {
                     mapa[pilY + 1][pilX + 1].classList.add("tarjeta");
+                    inventarioTarjeta=true;
+                    abrirPuerta();
 
                 }
                 if (cajaY == pilY + 1 && cajaX == pilX + 1&&inventarioCaja==false) {
                     mapa[pilY + 1][pilX + 1].classList.add("caja");
+                    inventarioCaja=true;
+                    abrirPuerta();
 
                 }
                 if (rayY == pilY + 1 && rayX == pilX + 1&&ray==false) {
@@ -330,13 +343,14 @@ function columnas() {
         pilX = 1;
         pilY += 3;
     }
+
 }
 
 function borrarRex(index){
     mapa[arrayVillanos[index]._posicionY][arrayVillanos[index]._posicionX].classList.remove("rexIzq1");
-                mapa[arrayVillanos[index]._posicionY][arrayVillanos[index]._posicionX].classList.remove("rexIzq2");
-                mapa[arrayVillanos[index]._posicionY][arrayVillanos[index]._posicionX].classList.remove("rexDer1");
-                mapa[arrayVillanos[index]._posicionY][arrayVillanos[index]._posicionX].classList.remove("rexDer2");
+    mapa[arrayVillanos[index]._posicionY][arrayVillanos[index]._posicionX].classList.remove("rexIzq2");
+    mapa[arrayVillanos[index]._posicionY][arrayVillanos[index]._posicionX].classList.remove("rexDer1");
+    mapa[arrayVillanos[index]._posicionY][arrayVillanos[index]._posicionX].classList.remove("rexDer2");
 }
 
 
@@ -418,11 +432,15 @@ function movimientoV() {
     
     }
 
-   
+function borrarTodo(){
+    navMap=[];
+    mapa=[];
+}
 
 
-window.onload = function () {
+window.onload = function main() {
     console.log(inventarioStinger);
+    crearMapa();
     randomizarObjetos();
     pintarMapa();
     anyadirRex();
