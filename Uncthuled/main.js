@@ -323,8 +323,7 @@ function columnas() {
                     if(muerteRex==false){
                     inventarioStinger = true;
                     }
-                    document.getElementById("inventario").innerHTML = '<img src="img/stinger.png"></img>'
-                }
+                  }
                 if (tarjetaY == pilY + 1 && tarjetaX == pilX + 1&&inventarioTarjeta==false) {
                     score +=50;
                     mapa[pilY + 1][pilX + 1].classList.add("tarjeta");
