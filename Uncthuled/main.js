@@ -1,20 +1,23 @@
 import Rex from './js/rex.js';
 /*
 -----------------------------------------TODO LIST-------------------------------------------
-1- REVELAR COLUMNAS                     X
-2- RANDOMIZAR OBJETOS
-3- RANDOMIZAR REX
-4- SEPARAR PINTAR REX DE MOVER REX
-5- AÑADIR OTRO REX/RAY
-6- MEJORAR INTERFAZ                     X
+1- MEJORAR RANDOMIZAR OBJETOS (A VECES FALLA)                     
+2- EVITAR QUE ENEMIGOS SE SUPERPONGAN 
+3- AÑADIR INVENTARIO
+4- PUNTUACIÓN CONSTANTE
+5- AÑADIR SPRITES
+6- AÑADIR VIDAS?                    
 7- LIMPIAR CÓDIGO
 
 -----------------------------------DEFINICIÓN VARIABLES GLOBALES------------------------------*/
 var arrayVillanos = new Array();
+var navMap = document.createElement("div");
+let inventario = document.createElement("div");
 var heroePosicionX = 8;
 var muerteRex = false;
 var heroePosicionY = 1;
 let inventarioStinger = false;
+let numeroMomias = 1;
 var mapa = new Array(15);
 var der = 0;
 var izq = 0;
@@ -34,6 +37,8 @@ var revelado = false;
 let inventarioCaja=false;
 let inventarioTarjeta= false;
 let ray = false;
+let level = 1;
+let score = 0;
 // DEFINICIÓN ARRAY MAPA
 function crearMapa(){
     for (var i = 0; i < mapa.length; i++) {
@@ -93,7 +98,7 @@ function pintarMapa() {
 
     for (var a = 0; a < mapa.length; a++) {
         for (var j = 0; j < mapa[a].length; j++) {
-            var navMap = document.createElement("div");
+            navMap = document.createElement("div");
             if (a == heroePosicionY && j == heroePosicionX) {
                 navMap.classList.add("der1");
             }
@@ -109,7 +114,8 @@ function pintarMapa() {
                 navMap.classList.remove("pilares");
                 navMap.classList.add("puerta");
             }
-            document.getElementById("mapa").appendChild(navMap);
+            document.getElementById("inventario").innerHTML= 'Nivel '+level+'<br>Score '+score;
+            document.querySelector(".mapa").appendChild(navMap);
             mapa[a][j] = navMap;
             document.onkeydown = movimiento;
 
@@ -134,12 +140,8 @@ function borrarPersonaje(){
 /*-------------------------------------MOVIMIENTO DEL PERSONAJE----------------------------------------------*/
 
 function movimiento(evento) {
-    if(heroePosicionX==8&&heroePosicionY==0){
-        borrarTodo();
-        crearMapa();
-        randomizarObjetos();
-        pintarMapa();
-    }
+    
+   
     var posAntHX = heroePosicionX;
     var posAntHY = heroePosicionY;
 
@@ -161,6 +163,7 @@ function movimiento(evento) {
                     abj = 0;
                 }
             }
+            subirNivel();
             columnas();
             break;
         //Arriba
@@ -178,6 +181,7 @@ function movimiento(evento) {
                     arr = 1;
                 }
             }
+            subirNivel();
             columnas();
 
             break;
@@ -198,6 +202,7 @@ function movimiento(evento) {
                     der = 1;
                 }
             }
+            subirNivel();
             columnas();
             break;
         //Izquierda
@@ -217,6 +222,7 @@ function movimiento(evento) {
                 }
 
             }
+            subirNivel();
             columnas();
             break;
         default:
@@ -290,7 +296,6 @@ function revelarPilar(posY, posX) {
 
 function columnas() {
     if(inventarioTarjeta==true&&inventarioCaja==true){
-        console.log("hola");
         mapa[0][8].classList.remove("puerta");
         mapa[0][8].classList.add("pasillo");
     }
@@ -305,7 +310,7 @@ function columnas() {
                 pilX = 1;
             }
             if (revelarPilar(pilY, pilX) == true) {
-
+                
                 mapa[pilY + 1][pilX + 2].classList.add("revelada");
                 mapa[pilY][pilX + 1].classList.add("revelada");
                 mapa[pilY][pilX + 2].classList.add("revelada");
@@ -313,27 +318,33 @@ function columnas() {
                 mapa[pilY + 1][pilX].classList.add("revelada");
                 mapa[pilY + 1][pilX + 1].classList.add("revelada");
                 if (stingerY == pilY + 1 && stingerX == pilX + 1&&inventarioStinger==false) {
+                    score += 20;
                     mapa[pilY + 1][pilX + 1].classList.add("stinger");
                     if(muerteRex==false){
                     inventarioStinger = true;
                     }
+                    document.getElementById("inventario").innerHTML = '<img src="img/stinger.png"></img>'
                 }
                 if (tarjetaY == pilY + 1 && tarjetaX == pilX + 1&&inventarioTarjeta==false) {
+                    score +=50;
                     mapa[pilY + 1][pilX + 1].classList.add("tarjeta");
                     inventarioTarjeta=true;
                     abrirPuerta();
 
                 }
                 if (cajaY == pilY + 1 && cajaX == pilX + 1&&inventarioCaja==false) {
+                    score +=50;
                     mapa[pilY + 1][pilX + 1].classList.add("caja");
                     inventarioCaja=true;
                     abrirPuerta();
 
                 }
                 if (rayY == pilY + 1 && rayX == pilX + 1&&ray==false) {
+                    score -=100;
                     mapa[pilY + 1][pilX + 1].classList.add("rexIzq1");
                     anyadirRex();
                     ray = true;
+                    numeroMomias++;
 
                 }
 
@@ -367,14 +378,18 @@ function anyadirRex() {
 }
 
 function movimientoV() {
+   
     for (let index = 0; index < arrayVillanos.length; index++) {
-            
+        if(heroePosicionX==arrayVillanos[index]._posicionX&&heroePosicionY==arrayVillanos[index]._posicionY&&inventarioStinger==false){
+            gameOver();
+        }
             if(arrayVillanos[index]._posicionY==heroePosicionY&&arrayVillanos[index]._posicionX==heroePosicionX&&inventarioStinger==true){
-                console.log("Hola");
+                score+=100;
                 borrarRex(index);
                 arrayVillanos.pop();
                 muerteRex=true;
                 inventarioStinger=false;
+                numeroMomias--;
             }
             
             if (arrayVillanos[index]._posicionX < heroePosicionX) {
@@ -431,15 +446,62 @@ function movimientoV() {
         }
     
     }
-
-function borrarTodo(){
-    navMap=[];
-    mapa=[];
+function subirNivel(){
+    if(heroePosicionX==8&&heroePosicionY==0){
+        let padre = document.querySelector(".pantalla");
+        let borrInv = document.querySelector("#inventario");
+        let borrLif = document.querySelector("life");
+        let borrar = document.querySelector(".mapa");
+        let creado = document.createElement("div");
+        creado.classList.add("mapa");
+        padre.removeChild(borrar);
+        padre.appendChild(creado);
+        inventario = document.createElement("div");
+        heroePosicionX = 8;
+        muerteRex = false;
+        heroePosicionY = 1;
+        inventarioStinger = false;
+        mapa = new Array(15);
+        arrayVillanos = new Array();
+        der = 0;
+        izq = 0;
+        abj = 0;
+        arr = 0;
+        stingerX = 2;
+        stingerY = 4;
+        tarjetaX = 2;
+        tarjetaY = 7;
+        cajaX = 6;
+        cajaY = 4;
+        rayX = 6;
+        rayY = 7;
+        pilY = 3;
+        pilX = 1;
+        revelado = false;
+        inventarioCaja=false;
+        inventarioTarjeta= false;
+        ray = false;
+        level++;
+        crearMapa();
+        randomizarObjetos();
+        //document.getElementById("inventario").innerHTML= 'Nivel '+level;
+        pintarMapa();
+        //document.getElementById("life").innerHTML='Score '+score;
+            for(var m = 0;m<=numeroMomias;m++){
+                anyadirRex();
+            }
+        }
 }
-
-
+function inventario2(){
+    inventario.classList.add("stinger");
+    document.getElementById("inventario").appendChild(inventario);
+}
+function gameOver(){
+    alert("MUERTO");
+}
 window.onload = function main() {
     console.log(inventarioStinger);
+    inventario2();
     crearMapa();
     randomizarObjetos();
     pintarMapa();

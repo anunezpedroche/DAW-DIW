@@ -4,18 +4,26 @@
     align-content: center;
 }
 
-#mapa {
+#inventario{
+    background-color: black;
+    color:white;
+}
+
+.mapa {
     display: grid;
     grid-template-columns: repeat(21, 1fr);
     grid-template-rows: repeat(16, 1fr);
     grid-area: auto;
 }
-
+#life{
+    background-color:black;
+    color:white;
+}
 body {
-    background-color: yellow;
     background-size: 100vw 100vh;
     background-attachment: fixed;
     margin: 0;
+    background-color:black;
 }
 
 .muro {
