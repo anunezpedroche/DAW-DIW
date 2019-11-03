@@ -1,0 +1,47 @@
+.transitioning{padding: 20px;
+    text-align: center;
+    display: block;
+    transition: 0.5s;
+    border-color: yellow;
+    border-style: solid;
+    border-radius: 10px;
+    background-color: #FFFFFF9F;
+}
+.key{
+    text-align: center;
+    padding: 10PX;
+    display: block;
+    margin:20px;
+    border-style: solid;
+    border-color:black;
+    transition: 0.5s;
+    background-color: #FFFFFF9F;
+    border-radius: 10px;
+    width: 75px;
+}
+.keys{
+   display: inline-flex;
+   padding-top: 20%;
+   padding-left: 5%;
+}
+
+kbd{
+    text-align: center;
+    font-size: 40px;
+    color:white;
+    text-shadow:1px 2px black;
+}
+span::before{
+    content: '\A';
+    white-space: pre;
+}
+span{
+    text-transform: uppercase;
+    color: yellow;
+    text-shadow: 1PX 1PX BLACK;
+}
+body{
+    background-image: url('Tryndamere_0.jpg');
+    background-repeat: no-repeat;
+    background-size: 100%;
+}
