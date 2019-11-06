@@ -1,0 +1,1 @@
+document.querySelector("button").addEventListener("click",function transicion(){document.querySelectorAll(".caja").forEach(element => element.classList.toggle("transicion"))});
