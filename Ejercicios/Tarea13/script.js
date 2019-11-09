@@ -12,14 +12,20 @@ function init(){
     header.appendChild(botones).classList.add("parar");
     botones.addEventListener("click", function() {
         parar=true;
+        saltar=false;
+        botar=false;
     });
     header.appendChild(botones2).classList.add("saltar");
     botones2.addEventListener("click", function() {
         saltar=true;
+        botar=false;
+        parar=false;
     });
     header.appendChild(botones3).classList.add("brincar");
     botones3.addEventListener("click",function() {
         botar=true;
+        saltar=false;
+        parar=false;
     });
     document.querySelector("button").addEventListener("click",crearCuadrado);
     
@@ -52,14 +58,19 @@ function cthulhu(){
 
 function mostrar(){
     if(saltar){
-        this.classList.add("saltar");
+        this.classList.add("saltarino");
+        this.classList.remove("rotarino");
+        saltar = false;
     }
     if(botar){
-        this.classList.add("brincar");
+        this.classList.add("rotarino");
+        this.classList.remove("saltarino");
+        botar =false;
     }
     if(parar){
-        this.classList.remove("saltar");
-        this.classList.remove("brincar");
+        this.classList.remove("saltarino");
+        this.classList.remove("rotarino");
+        parar = false;
     }
 }
 window.onload=init;
