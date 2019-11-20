@@ -9,11 +9,6 @@ container{
     grid-template-rows: repeat(5,120px);
     margin: 1rem;
     display: grid;
-    /* 
- 
-    ^(;,;)^ : Fragmento perdido
-
-   */
 }
 
 button{
@@ -38,19 +33,19 @@ header{
 
 }
 .saltar{
-    background: url('cthulhu.svg');
+    background: url('earthsg.png');
     background-size: 100% 100%;
     width: 100px;
     height: 90px;
 }
 .brincar{
-    background: url('cthulhu.svg');
+    background: url('sgglyph.png');
     background-size: 100% 100%;
     width: 100px;
     height: 80px;
 }
 .parar{
-    background: url('cthulhu.svg');
+    background: url('stapglyph.png');
     background-size: 100% 100%;
     width: 100px;
     height: 70px;
@@ -62,11 +57,6 @@ header{
     transition-duration: 0.5s;
     transition-timing-function: ease-in;
     z-index: 2;
-    /* 
- 
-    ^(;,;)^ : Fragmento perdido
-
-   */
 }
 
 .desevoluciona{
@@ -74,31 +64,63 @@ header{
     transition-duration: 0.5s;
     background-color: #10e;
     z-index: 1;
-        /* 
- 
-    ^(;,;)^ : Fragmento perdido
-
-   */
 }
 
 .ultimate{
     background-color: #441155;
     background-image: url('cthulhu.svg');
     background-size: 100% 100%;
-    /* 
- 
-    ^(;,;)^ : Fragmento perdido
-
-   */
 }
 
 .ultimate:hover{
     width: 95%;
     height: 95%;
+}
+.saltarino{
+    position: relative;
+    animation-name: saltarin;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+@keyframes saltarin{
+    from {
+        top: 0px;
+        left:0px;
+        animation-timing-function: ease-out;
+        }
+        25% {
+            top: 10px;
+            left: 20px;
+        animation-timing-function: ease-in;
+        }
+        50% {
+        top: 0px;
+        left:40px;
+        animation-timing-function: ease-out;
+        }
+        75% {
+        top: 10px;
+        left: 20px;
+        animation-timing-function: ease-in;
+        }
+        to {
+        top: 0px;
+        left: 0px;
+        }
+}
 
-    /* 
- 
-    ^(;,;)^ : Fragmento perdido
+.rotarino{
+    position: relative;
+    animation-name: rotarin;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
 
-   */
+@keyframes rotarin{
+    from {
+        transform: rotate(0deg);
+    }
+        to {
+            transform:rotate(360deg);
+        }
 }
