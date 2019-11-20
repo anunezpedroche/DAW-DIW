@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Botonsitos</title>
+</head>
+<body>
+    <container>
+
+    </container>
+    <script>
+        function init(){
+            
+                let padre = document.querySelector("container");
+            for(var i=0;i<=9;i++){
+                let boton = document.createElement("button");
+                padre.appendChild(boton);
+                boton.value=i;
+                boton.innerText=i;
+            }
+            let div = document.createElement("div");
+            padre.appendChild(div);
+            let botonsitos = document.querySelectorAll("button");
+            botonsitos.forEach(bot => bot.addEventListener("click",hazAlgo));
+            
+        }
+
+        function hazAlgo(){
+            
+            let divs = document.querySelector("div");
+            console.log(divs.value);
+            this.keyCode = divs.innerText+this.value;
+            divs.innerText = divs.innerText+this.value;
+            
+        }
+        window.onload=init;
+    </script>
+</body>
+</html>
