@@ -32,7 +32,9 @@ body{
 */
 
 items{
-    
+    display: grid;
+    grid-column: repeat(1fr,2fr,1fr);
+  
     /* 
      * Fragmentos perdidos 
      * ^(;,;)^
@@ -41,6 +43,8 @@ items{
 }
 
 item{
+    grid-auto-columns: auto;
+    grid-auto-rows: auto;
     /* 
      * Fragmentos perdidos 
      * ^(;,;)^
@@ -85,9 +89,7 @@ button:active {
 */
 
 steps{
-   display: grid;
-   grid-column: repeat(1fr,2fr,1fr);
-   opacity: 0;
+
     /* 
      * Fragmentos perdidos 
      * ^(;,;)^
@@ -101,7 +103,7 @@ steps{
 * with a transition.
 */
 steps * {
-
+    opacity: 0;
     /* 
      * Fragmentos perdidos 
      * ^(;,;)^
@@ -109,7 +111,8 @@ steps * {
 }
 
 .estabaEscondido{
-   opacity: 100;
+   opacity: 1;
+   transition: opacity 1s;
     /* 
      * Fragmentos perdidos 
      * ^(;,;)^
@@ -122,7 +125,9 @@ steps * {
 * CSS for ProgressBars
 */
 progress{
-    width: 400px;
+    width: 500px;
+    transition: width 5s;
+    
     /* 
      * Fragmentos perdidos 
      * ^(;,;)^
