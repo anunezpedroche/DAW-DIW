@@ -20,7 +20,7 @@ function promesaMigrar(x){
 
             resolve(x);
 
-        }, 50);
+        }, 15);
 
     });
 
@@ -43,7 +43,8 @@ async function startMigration(){
     let label = document.querySelector(`steplabel[data-step="${labelStep}"]`);
     let progress = document.querySelector(`progress[data-step="${prog}"]`);
     let msg = document.querySelector(`finalmsg[data-step="${finalMsg}"]`);
-
+    if(!label||!progress||!msg)
+    return;
     //Add each class to DOM elements
     label.classList.add("estabaEscondido");
     progress.classList.add("estabaEscondido");
@@ -59,6 +60,7 @@ async function startMigration(){
 
     //Once progress-bar it's full, then show "Completado"
     msg.classList.add("estabaEscondido");
+    msg.classList.add("neon");
 
     //Save the finalMsg because we going to increment their value and we need current value
     let transit = document.querySelector(`finalmsg[data-step="${finalMsg}"]`);

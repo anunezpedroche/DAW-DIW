@@ -32,23 +32,13 @@ body{
 */
 
 items{
-    display: grid;
-    grid-column: repeat(1fr,2fr,1fr);
-  
-    /* 
-     * Fragmentos perdidos 
-     * ^(;,;)^
-     */
-    
+    width: 900px;
+    text-align: center;
 }
 
 item{
-    grid-auto-columns: auto;
-    grid-auto-rows: auto;
-    /* 
-     * Fragmentos perdidos 
-     * ^(;,;)^
-     */
+    
+
 }
 
 /*
@@ -57,26 +47,17 @@ item{
 
 button{
     
-    /* 
-     * Fragmentos perdidos 
-     * ^(;,;)^
-     */
+
 }
 
 button:hover {
     
-    /* 
-     * Fragmentos perdidos 
-     * ^(;,;)^
-     */
+
 }
 
 button:active {
     
-    /* 
-     * Fragmentos perdidos 
-     * ^(;,;)^
-     */
+
 }
 
 
@@ -89,11 +70,11 @@ button:active {
 */
 
 steps{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    padding: auto;
+    margin: auto;
 
-    /* 
-     * Fragmentos perdidos 
-     * ^(;,;)^
-     */
 }
 
 /*
@@ -104,19 +85,13 @@ steps{
 */
 steps * {
     opacity: 0;
-    /* 
-     * Fragmentos perdidos 
-     * ^(;,;)^
-     */
+ 
 }
 
 .estabaEscondido{
    opacity: 1;
    transition: opacity 1s;
-    /* 
-     * Fragmentos perdidos 
-     * ^(;,;)^
-     */
+ 
 }
 
 
@@ -125,32 +100,60 @@ steps * {
 * CSS for ProgressBars
 */
 progress{
+    border: 1px solid white;
+    background-color: #00000055;
+    border-radius: 5px;
+    padding-bottom:5px;
+    padding-top: 5px;
+    padding-left:5px;
+    margin: 10px;
     width: 500px;
-    transition: width 5s;
     
-    /* 
-     * Fragmentos perdidos 
-     * ^(;,;)^
-     */
+   
 }
 
 content{
-    background-color: black;
+    display: grid;
+    grid-template-columns: 1fr 1fr 3fr;
+    background-color: #000000aa;
+    width: 900px;
+    padding:10px;
+    border-radius: 10px;
+}
+steplabel{
+    margin:10px;
+}
+finalmsg{
+    margin:10px
+    
 }
 
-finalmsg{
-
-    /* 
-     * Fragmentos perdidos 
-     * ^(;,;)^
-     */
+.neon{
+    
+    animation-name: neon;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
 }
 
 @keyframes neon {
- 
-    /* 
-     * Fragmentos perdidos 
-     * ^(;,;)^
-     */
+    0% {
+        color:red;
+    }
+    25%{
+        color:orange;
+        text-shadow: 2px 2px 5px red;
+
+    }
+    50%{
+        color:red;
+    }
+    75%{
+        color:orange;
+        text-shadow: 2px 2px 5px red;
+    }
+    100%{
+        color:red;
+    }
+   
 }
 
