@@ -19,6 +19,7 @@ body{
     
     /*background-color:#323232;*/
     background-image:url("https://picsum.photos/1600/900");
+    background-size: 100% 100%;
     font-family: 'OuroborosRegular';
     font-weight: normal;
     font-style: normal;
@@ -37,26 +38,33 @@ items{
 }
 
 item{
-    
-
+    text-align: center;
 }
 
 /*
 * CSS for body
 */
-
-button{
-    
-
+h1{
+    font-size: 40px;
 }
+button{
+    width: 450px;
+    height: 90px;
+    border: 2px solid white;
+    color: white;
+    border-radius: 30px;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    font-family: 'OuroborosRegular';
+    font-size: 30px;
+    background: linear-gradient(to bottom, rgba(203,96,179,1) 0%, rgba(193,70,161,1) 10%, rgba(168,0,119,1) 52%, rgba(219,54,164,1) 100%);}
 
 button:hover {
-    
-
-}
+    background: linear-gradient(to bottom, rgba(219,54,164,1) 0%, rgba(168,0,119,1) 48%, rgba(193,70,161,1) 90%, rgba(203,96,179,1) 100%);}
 
 button:active {
-    
+    background: linear-gradient(to bottom, rgba(168,0,118,1) 0%, rgba(219,54,164,1) 48%, rgba(193,70,161,1) 48%, rgba(168,0,118,1) 100%);
 
 }
 
@@ -107,9 +115,11 @@ progress{
     padding-top: 5px;
     padding-left:5px;
     margin: 10px;
-    width: 500px;
-    
-   
+    width: 450px;
+    color:green;
+}
+progress::-moz-progress-bar{
+    background-color:green;
 }
 
 content{
@@ -121,6 +131,7 @@ content{
     border-radius: 10px;
 }
 steplabel{
+    text-align: left;
     margin:10px;
 }
 finalmsg{
@@ -131,28 +142,23 @@ finalmsg{
 .neon{
     
     animation-name: neon;
-    animation-duration: 2s;
+    animation-duration: 1s;
     animation-iteration-count: infinite;
 }
 
 @keyframes neon {
     0% {
         color:red;
-    }
-    25%{
-        color:orange;
-        text-shadow: 2px 2px 5px red;
-
+        opacity:0.7;
     }
     50%{
-        color:red;
-    }
-    75%{
         color:orange;
         text-shadow: 2px 2px 5px red;
+        opacity:1;
     }
     100%{
         color:red;
+        opacity:0.7;
     }
    
 }

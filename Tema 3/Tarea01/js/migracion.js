@@ -13,21 +13,21 @@ let finalMsg = 3;
 let clicked=  true;
 
 function promesaMigrar(x){
-
+//With this promise we can simulate the current action of the Miskatonik migration
     return new Promise(resolve => {
 
         setTimeout(() => {
 
             resolve(x);
 
-        }, 15);
+        }, 29);
 
     });
 
 }
 
 function clicky(){
-
+//Disabling button
     if(clicked==true){
 
         startMigration();
@@ -39,7 +39,7 @@ function clicky(){
 async function startMigration(){
 
     clicked = false;
-    // We catch the DOM elements that we going to work
+    //Catch the DOM elements that we going to work
     let label = document.querySelector(`steplabel[data-step="${labelStep}"]`);
     let progress = document.querySelector(`progress[data-step="${prog}"]`);
     let msg = document.querySelector(`finalmsg[data-step="${finalMsg}"]`);
@@ -69,7 +69,7 @@ async function startMigration(){
     prog +=3;
     finalMsg += 3;
 
-    //We call again to startMigration
+    //Call again to startMigration
     transit.addEventListener("transitionend",startMigration);
 }
 
