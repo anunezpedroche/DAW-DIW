@@ -41,7 +41,7 @@ function trigger(){
 
 function filtrar(elemento){
     let letra = document.getElementById('buscador').value;
-    return elemento.properties.direccion.startsWith(letra);
+    return elemento.properties.centro.startsWith(letra);
 }
 
 function filtrazo(a){
