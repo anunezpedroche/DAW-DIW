@@ -145,6 +145,7 @@ function movimiento(evento) {
     var posAntHX = heroePosicionX;
     var posAntHY = heroePosicionY;
 
+        
     switch (evento.key) {
 
         case "s":
@@ -162,7 +163,9 @@ function movimiento(evento) {
                     mapa[heroePosicionY][heroePosicionX].classList.add("der1");
                     abj = 0;
                 }
+                
             }
+            
             subirNivel();
             columnas();
             break;
@@ -385,7 +388,7 @@ function movimientoV() {
             if(arrayVillanos[index]._posicionY==heroePosicionY&&arrayVillanos[index]._posicionX==heroePosicionX&&inventarioStinger==true){
                 score+=100;
                 borrarRex(index);
-                arrayVillanos.pop();
+                arrayVillanos.slice(index,index);
                 muerteRex=true;
                 inventarioStinger=false;
                 numeroMomias--;
@@ -499,7 +502,6 @@ function gameOver(){
     alert("MUERTO");
 }
 window.onload = function main() {
-    console.log(inventarioStinger);
     inventario2();
     crearMapa();
     randomizarObjetos();

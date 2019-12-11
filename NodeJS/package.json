@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "scss": "node-sass -watch scss -o \"public/css/\""
+    "scss": "node-sass -watch scss -o \"public/css/\"",
+    "jefe": "nodemon server.js"
   },
   "keywords": [
     "Simple",
@@ -15,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "node-sass": "^4.13.0"
+    "node-sass": "^4.13.0",
+    "nodemon": "^2.0.2"
   }
 }
