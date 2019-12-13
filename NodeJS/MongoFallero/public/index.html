@@ -10,8 +10,18 @@
 </head>
 <body>
     <div class="filtro"></div>
-    <input type="text" id="buscador">
-    <input type="button" id="buscar">
+    <div class="infPrin">
+        <form>
+        <input type="radio" id="principal" name="tipoFalla" checked>
+        <label for="principal">Principal</label>
+        <input type="radio" id="infantil" name="tipoFalla">
+        <label for="infantil">Infantil</label>
+    </form>
+        Año de fundación:<br>
+             <input type="text" id="desde" placeholder="Desde"><br>
+             <input type="text" id="hasta" placeholder="Hasta"><br>
+    </div>
+    <br>
     <div class="resultados"></div>
 </body>
 </html>

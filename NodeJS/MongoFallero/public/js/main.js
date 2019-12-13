@@ -1,8 +1,38 @@
 let disparador = false;
 let opciones = document.createElement("select");
 
+function secciones(){
+    fetch('http://mapas.valencia.es/lanzadera/opendata/Monumentos_falleros/JSON').then(responseSection => {
+
+        return responseSection.json();
+    
+    }).then(respuestaSeccion =>{
+
+        let seleccion = new Set;
+        let resultSeccion = respuestaSeccion.features;
+       
+        seleccion.add("Todas");
+        
+        resultSeccion.forEach(secciones=>{
+
+            seleccion.add(secciones.properties.seccion);
+
+        });
+        seleccion.forEach(options=>{
+            let secciones = document.createElement("option");
+
+            secciones.value = options;
+            secciones.innerHTML = options;
+            opciones.appendChild(secciones);
+
+        });
+
+        document.querySelector(".filtro").appendChild(opciones);
+    });
+
+}
+
 function buscador(){
-    disparador = document.getElementById('buscador').addEventListener('input',trigger);
     fetch('http://mapas.valencia.es/lanzadera/opendata/Monumentos_falleros/JSON').then(response => {
 
         return response.json();
@@ -14,43 +44,40 @@ function buscador(){
     let seleccion = new Set;
     let todes = document.createElement("option");
     let result;
+    let desde = document.getElementById("desde").value;
+    let hasta = document.getElementById("hasta").value;
+    let param;
+    console.log(desde);
     if(valor.value==="Todas"){
-        opciones.innerHTML="";
         result = respuesta.features;
     }else{
-        result = respuesta.features.filter(filtrar);
+        result = respuesta.features.filter(filtrarSecciones);
     }
-    //Añadimos la
+
+    
     seleccion.clear();
     opciones.name = "secciones";
-    //todes.innerHTML = "Todas";
-    //opciones.appendChild(todes);
         
         result.forEach(fallas=>{
             seleccion.add("Todas");
             let falla = document.createElement("div");
             falla.className ="fallas";
-            let boceto = document.createElement('img');
-            let listadito = document.createElement('li'); 
-            seleccion.add(fallas.properties.seccion);
+            if(fallas.properties.anyo_fundacion>=desde&&fallas.properties.anyo_fundacion<=hasta){
 
-            //boceto.src = fallas.properties.boceto;
+                if(document.getElementById("principal").checked){
+                    falla.innerHTML="<img src="+fallas.properties.boceto+"></img><br>"+fallas.properties.nombre+" -- "+fallas.properties.sector+" -- "+fallas.properties.seccion;
+                }else if(document.getElementById("infantil").checked){
+                    falla.innerHTML="<img src="+fallas.properties.boceto_i+"></img><br>"+fallas.properties.nombre+" -- "+fallas.properties.sector+" -- "+fallas.properties.seccion_i;
+                }else{
+    
+                }
+    
+                listar.appendChild(falla);
+            }
 
-            falla.innerHTML="<img src="+fallas.properties.boceto+"></img><br>"+fallas.properties.nombre+" -- "+fallas.properties.sector+" -- "+fallas.properties.seccion;
-            //falla.appendChild(boceto);
-            listar.appendChild(falla);
             
         });
 
-        seleccion.forEach(options=>{
-        
-        let secciones = document.createElement("option");
-        secciones.value = options;
-        secciones.innerHTML = options;
-        opciones.appendChild(secciones);
-
-        });
-        document.querySelector(".filtro").appendChild(opciones);
         document.querySelector(".resultados").innerHTML = "";
         document.querySelector(".resultados").appendChild(listar);
 
@@ -58,29 +85,22 @@ function buscador(){
 }
 
 function upper(){
-    document.getElementById('buscador').value = document.getElementById('buscador').value.toUpperCase();
+
 }  
 
 function init(){
 
-    
     document.querySelector(".filtro").appendChild(opciones);
+    secciones();
     buscador();
-    document.getElementById('buscador').addEventListener('input',upper);
+    //document.getElementById('buscador').addEventListener('input',upper);
     document.querySelector("select").addEventListener("change",buscador);
+    document.getElementById("hasta").addEventListener("change",buscador);
 }
 
-function trigger(){
-
-    return true;
-}
-
-function filtrar(elemento){
+function filtrarSecciones(elemento){
     let valor = document.querySelector("select");
     return elemento.properties.seccion.startsWith(valor.value);
 }
 
-function filtrazo(a){
-
-}
 window.onload=init;
