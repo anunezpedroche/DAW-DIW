@@ -1,0 +1,20 @@
+body {
+  background-color: gray;
+  font-family: Arial, Helvetica, sans-serif; }
+
+#buscar {
+  background-color: #0099ff;
+  border: none;
+  height: 20px; }
+
+.resultados ul {
+  list-style: none; }
+  .resultados ul li {
+    border: 1px solid white;
+    color: white;
+    list-style: none;
+    padding: 5px;
+    margin: 2px;
+    border-radius: 3px; }
+
+/*# sourceMappingURL=style.css.map */
