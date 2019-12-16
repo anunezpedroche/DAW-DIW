@@ -62,6 +62,38 @@ function buscador(){
         if((fallas.properties.anyo_fundacion>=desde&&fallas.properties.anyo_fundacion<=hasta)||(desde==''&&hasta=='')){
             //Creamos el div class="fallas"
             let falla = document.createElement("div");
+
+            let puntuacion = document.createElement("form");
+            let punt = document.createElement("input");
+            let ip = document.createElement("input");
+            let idFalla  = document.createElement("input");
+            let sub = document.createElement("input");
+
+
+            puntuacion.method='post';
+            puntuacion.action='/api/puntuaciones/';
+
+            sub.type = 'submit';
+            sub.value = 'Enviar puntuación';
+
+            idFalla.type = 'hidden';
+            idFalla.name = 'idFalla';
+            idFalla.value = '5';
+
+            ip.type = 'hidden';
+            ip.name = 'ip';
+            ip.value = '129.23.5.4';
+
+            punt.type='number';
+            punt.name='puntuacion';
+            punt.placeholder='Puntuación';
+
+
+            puntuacion.appendChild(idFalla);
+            puntuacion.appendChild(ip);
+            puntuacion.appendChild(punt);
+            puntuacion.appendChild(sub);
+
             falla.className ="fallas";
             //Comprobamos cuál es el radioButton (Infantil o Principal) que está seleccionado para devolver unos valores u otros
             if(document.getElementById("principal").checked){
@@ -69,6 +101,7 @@ function buscador(){
             }else if(document.getElementById("infantil").checked){
                 falla.innerHTML="<img src="+fallas.properties.boceto_i+"></img><br>"+fallas.properties.nombre+" -- "+fallas.properties.sector+" -- "+fallas.properties.seccion_i;
             }
+            falla.appendChild(puntuacion);
             listar.appendChild(falla);
         }
         //Finalmente añadimos cada elemento del forEach al div resultados
