@@ -25,6 +25,7 @@ mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig.url,{
     useNewUrlParser:true}).then(()=>{
         console.log(" * Cargada y preparada en 2019");
+
     }).catch(err=>{
         console.log("Algo ha pasado...saliendo : ",err);
         process.exit();
@@ -33,10 +34,10 @@ mongoose.connect(dbConfig.url,{
 //Inserta en MongoDB,pero, no me funcionaba con app2.post ya que directamente ni intentaba entrar dentro de la función
 puntuaciones.save();
 
-
-app2.get('/puntuaciones/',(req,res)=>{
-    res.json();
+app2.get('/api/',(req,res)=>{
+    res.json({'mierda':'mierdaca de la buena'});
 });
+
 // Paginas publicas (estaticas)
 app.use(express.static(path.join(__dirname, 'DatosAbiertos/public')));
 
