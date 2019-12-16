@@ -57,21 +57,22 @@ function buscador(){
     }
     //Empezamos el forEach de result para tratar los datos    
     result.forEach(fallas=>{
-        //Creamos el div class="fallas"
-        let falla = document.createElement("div");
-        falla.className ="fallas";
+
         //Aplicamos el filtro de fechas (Si está vacío mostrará todas las fallas)
         if((fallas.properties.anyo_fundacion>=desde&&fallas.properties.anyo_fundacion<=hasta)||(desde==''&&hasta=='')){
+            //Creamos el div class="fallas"
+            let falla = document.createElement("div");
+            falla.className ="fallas";
             //Comprobamos cuál es el radioButton (Infantil o Principal) que está seleccionado para devolver unos valores u otros
             if(document.getElementById("principal").checked){
                 falla.innerHTML="<img src="+fallas.properties.boceto+"></img><br>"+fallas.properties.nombre+" -- "+fallas.properties.sector+" -- "+fallas.properties.seccion+" Coordenadas: "+fallas.geometry.coordinates;
             }else if(document.getElementById("infantil").checked){
                 falla.innerHTML="<img src="+fallas.properties.boceto_i+"></img><br>"+fallas.properties.nombre+" -- "+fallas.properties.sector+" -- "+fallas.properties.seccion_i;
             }
-        
+            listar.appendChild(falla);
         }
         //Finalmente añadimos cada elemento del forEach al div resultados
-        listar.appendChild(falla);
+        
     });
 }
 
