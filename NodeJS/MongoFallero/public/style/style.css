@@ -1,5 +1,6 @@
 body {
-  background-color: pink; }
+  background-color: pink;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; }
 
 .resultados {
   border-radius: 5px;
@@ -16,14 +17,22 @@ body {
 .fallas {
   box-shadow: 3px 3px 5px yellow;
   border: 2px solid black;
+  border-radius: 2px;
   margin: 5px;
-  opacity: 0.7; }
+  opacity: 0.7;
+  text-align: center; }
   .fallas img {
-    height: 80%;
+    height: 90%;
     width: 100%; }
 
 .fallas:hover {
   opacity: 1;
   font-size: large; }
+
+.filtro {
+  margin: 5px; }
+  .filtro input {
+    margin-top: 5px;
+    padding: 5px; }
 
 /*# sourceMappingURL=style.css.map */

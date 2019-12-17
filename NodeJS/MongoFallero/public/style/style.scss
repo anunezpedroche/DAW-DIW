@@ -1,6 +1,6 @@
 body{
     background-color: pink;
-    
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 
 }
 
@@ -21,15 +21,26 @@ body{
 .fallas{
     box-shadow: 3px 3px 5px yellow;
     border: 2px solid black;
+    border-radius: 2px;
     margin: 5px;
     img{
-        height: 80%;
+        height: 90%;
         width: 100%;
     }
     opacity: 0.7;
+    text-align: center;
 }
 
 .fallas:hover{
     opacity: 1;
     font-size: large;
+    //font-weight: 500;
+}
+
+.filtro{
+    input{
+        margin-top:5px;
+        padding: 5px;
+    }
+    margin: 5px;
 }

@@ -78,13 +78,13 @@ function buscador(){
 
             idFalla.type = 'hidden';
             idFalla.name = 'idFalla';
-            idFalla.value = '5';
+            idFalla.value = fallas.properties.id;
 
             ip.type = 'hidden';
             ip.name = 'ip';
             ip.value = '129.23.5.4';
 
-            punt.type='number';
+            punt.type='text';
             punt.name='puntuacion';
             punt.placeholder='Puntuación';
 
@@ -97,7 +97,7 @@ function buscador(){
             falla.className ="fallas";
             //Comprobamos cuál es el radioButton (Infantil o Principal) que está seleccionado para devolver unos valores u otros
             if(document.getElementById("principal").checked){
-                falla.innerHTML="<img src="+fallas.properties.boceto+"></img><br>"+fallas.properties.nombre+" -- "+fallas.properties.sector+" -- "+fallas.properties.seccion+" Coordenadas: "+fallas.geometry.coordinates;
+                falla.innerHTML=fallas.properties.nombre+"<img src="+fallas.properties.boceto+"></img><br>";
             }else if(document.getElementById("infantil").checked){
                 falla.innerHTML="<img src="+fallas.properties.boceto_i+"></img><br>"+fallas.properties.nombre+" -- "+fallas.properties.sector+" -- "+fallas.properties.seccion_i;
             }
