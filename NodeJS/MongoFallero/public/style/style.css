@@ -25,10 +25,11 @@ body {
     height: 90%;
     width: 100%; }
 
-.fallas:hover {
-  opacity: 1;
-  font-size: large; }
-
+/*.fallas:hover{
+    opacity: 1;
+    font-size: large;
+    //font-weight: 500;
+}*/
 .filtro {
   margin: 5px; }
   .filtro input {

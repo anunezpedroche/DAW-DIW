@@ -39,3 +39,14 @@ exports.create = (req,res)=>{
         });
     });
 };
+
+exports.findOne = (req,res)=>{
+    Puntuacion.findOne({idFalla:req.params.idFalla}).then(puntuaciones=>{
+        console.log(req.params);
+        res.send(puntuaciones);
+    }).catch(err=>{
+        res.status(500).send({
+            message: err.message || " Algo fue mal mientras los capturabamos a todos"
+        });
+    });
+};

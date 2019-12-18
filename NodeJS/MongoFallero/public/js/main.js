@@ -101,12 +101,17 @@ function buscador(){
             }else if(document.getElementById("infantil").checked){
                 falla.innerHTML="<img src="+fallas.properties.boceto_i+"></img><br>"+fallas.properties.nombre+" -- "+fallas.properties.sector+" -- "+fallas.properties.seccion_i;
             }
+            falla.id=fallas.properties.id;
             falla.appendChild(puntuacion);
             listar.appendChild(falla);
         }
         //Finalmente añadimos cada elemento del forEach al div resultados
         
     });
+}
+
+function ubicacion(){
+    console.log('hola');
 }
 
 function filtrarSecciones(elemento){
@@ -144,11 +149,15 @@ async function init(){
     document.querySelector(".filtro").appendChild(opciones);
     buscador();
     secciones();
+
+
+    document.querySelector("").addEventListener("click",ubicacion);
     document.querySelector("select").addEventListener("change",buscador);
     document.getElementById("hasta").addEventListener("change",buscador);
     document.getElementById("desde").addEventListener("change",buscador);
     document.getElementById("principal").addEventListener("click",buscador);
     document.getElementById("infantil").addEventListener("click",buscador);
+    
 }
 
 window.onload=init;
