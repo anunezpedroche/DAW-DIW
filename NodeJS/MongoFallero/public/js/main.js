@@ -64,11 +64,11 @@ function buscador(){
             let falla = document.createElement("div");
 
             let puntuacion = document.createElement("form");
-            let punt = document.createElement("input");
+            
             let ip = document.createElement("input");
             let idFalla  = document.createElement("input");
             let sub = document.createElement("input");
-
+            
 
             puntuacion.method='post';
             puntuacion.action='/api/puntuaciones/';
@@ -84,15 +84,25 @@ function buscador(){
             ip.name = 'ip';
             ip.value = '129.23.5.4';
 
-            punt.type='text';
-            punt.name='puntuacion';
-            punt.placeholder='Puntuación';
+            for(let n = 0;n<5;n++){
+                let stars = document.createElement("label");
+
+            let punt = document.createElement("input");
+
+                punt.type='radio';
+                punt.id='star'+n+fallas.properties.id;
+                punt.value=n;
+
+                stars.htmlFor = 'star'+n+fallas.properties.id;
+                stars.innerHTML = '★';
+                puntuacion.appendChild(punt);
+                puntuacion.appendChild(stars);
+            }
 
 
             puntuacion.appendChild(idFalla);
             puntuacion.appendChild(ip);
-            puntuacion.appendChild(punt);
-            puntuacion.appendChild(sub);
+            //puntuacion.appendChild(sub);
 
             falla.className ="fallas";
             //Comprobamos cuál es el radioButton (Infantil o Principal) que está seleccionado para devolver unos valores u otros
@@ -151,7 +161,7 @@ async function init(){
     secciones();
 
 
-    document.querySelector("").addEventListener("click",ubicacion);
+    //document.querySelector("").addEventListener("click",ubicacion);
     document.querySelector("select").addEventListener("change",buscador);
     document.getElementById("hasta").addEventListener("change",buscador);
     document.getElementById("desde").addEventListener("change",buscador);

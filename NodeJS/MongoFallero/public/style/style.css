@@ -7,7 +7,7 @@ body {
   border: 2px solid black;
   background-color: orange;
   display: grid,flexbox;
-  width: 1400px;
+  width: 1200px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   margin: 0 auto;
@@ -24,12 +24,25 @@ body {
   .fallas img {
     height: 90%;
     width: 100%; }
+  .fallas form {
+    direction: rtl;
+    unicode-bidi: bidi-override; }
+  .fallas input[type="radio"] {
+    display: none; }
+  .fallas label {
+    color: grey;
+    font-size: 25px; }
+  .fallas label:hover {
+    color: red; }
+  .fallas label:hover ~ label {
+    color: red; }
+  .fallas input[type="radio"]:checked ~ label {
+    color: red; }
 
-/*.fallas:hover{
-    opacity: 1;
-    font-size: large;
-    //font-weight: 500;
-}*/
+.fallas:hover {
+  opacity: 1;
+  font-size: large; }
+
 .filtro {
   margin: 5px; }
   .filtro input {

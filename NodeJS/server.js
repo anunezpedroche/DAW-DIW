@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const dbConfig = require('./MongoFallero/config/database.config');
 const mongoose = require('mongoose');
 
-
 app.use(bodyParser.urlencoded({
     extended:true
 }));
