@@ -3,37 +3,71 @@ let respuestaFallitas;
 let url = 'http://mapas.valencia.es/lanzadera/opendata/Monumentos_falleros/JSON';
 
 function secciones(){
-        //Definimos una variable como 'Set' que es un tipo de ArrayList que sólo nos añade los valores que no se repitan dentro de un array
-        let seleccion = new Set;
+    opciones.innerHTML = "";
+    //Definimos una variable como 'Set' que es un tipo de ArrayList que sólo nos añade los valores que no se repitan dentro de un array
+    let seleccion = new Set;
 
-        //Recuperamos nuestra información del JSON en la variable resultSeccion para aplicarle un forEach
-        let resultSeccion = respuestaFallitas.features;
+    //Recuperamos nuestra información del JSON en la variable resultSeccion para aplicarle un forEach
+    let resultSeccion = respuestaFallitas.features;
 
-        //Añadimos como primer valor 'Todas' para mostrar todas las fallas
-        seleccion.add("Todas");
-        
-        //Comenzamos el forEach
-        resultSeccion.forEach(secciones=>{
-            //Añadimos solo las secciones accediendo al atributo sección del JSON
-            seleccion.add(secciones.properties.seccion);
-            //Como únicamente nos está añadiendo los valores que no se repiten, más tarde podremos directamente crear un select con estos datos sin volver a tocar el Set (a menos que queramos ordenarlos alfabéticamente)
-        });
-        
-        //Ahora vamos a realizar un forEach a cada elemento del ArrayList para añadirlo al select original
+    //Añadimos como primer valor 'Todas' para mostrar todas las fallas
+    seleccion.add("Todas");
+    
+    //Comenzamos el forEach
+    resultSeccion.forEach(secciones=>{
+        //Añadimos solo las secciones accediendo al atributo sección del JSON
+        seleccion.add(secciones.properties.seccion);
+        //Como únicamente nos está añadiendo los valores que no se repiten, más tarde podremos directamente crear un select con estos datos sin volver a tocar el Set (a menos que queramos ordenarlos alfabéticamente)
+    });
+    
+    //Ahora vamos a realizar un forEach a cada elemento del ArrayList para añadirlo al select original
 
-        seleccion.forEach(options=>{
+    seleccion.forEach(options=>{
 
-            //Creamos una opción por cada elemento que va a tener nuestro select
-            let secciones = document.createElement("option");
-            //Le añadimos el valor dentro del forEach a esa nueva sección
-            secciones.innerText = options;
-            //Finalmente añadimos al select nuestro nuevo option
-            opciones.appendChild(secciones);
+        //Creamos una opción por cada elemento que va a tener nuestro select
+        let secciones = document.createElement("option");
+        //Le añadimos el valor dentro del forEach a esa nueva sección
+        secciones.innerText = options;
+        //Finalmente añadimos al select nuestro nuevo option
+        opciones.appendChild(secciones);
 
-        });
-        //Aplicamos el elemento opciones dentro del div con clase filtro
-        document.querySelector(".filtro").insertBefore(opciones,document.querySelector('form'));
-        }
+    });
+    //Aplicamos el elemento opciones dentro del div con clase filtro
+    document.querySelector(".filtro").insertBefore(opciones,document.querySelector('form'));
+}
+function seccionesInfantiles(){
+    options.innerHTML="";
+    //Definimos una variable como 'Set' que es un tipo de ArrayList que sólo nos añade los valores que no se repitan dentro de un array
+    let seleccion = new Set;
+
+    //Recuperamos nuestra información del JSON en la variable resultSeccion para aplicarle un forEach
+    let resultSeccion = respuestaFallitas.features;
+
+    //Añadimos como primer valor 'Todas' para mostrar todas las fallas
+    seleccion.add("Todas");
+    
+    //Comenzamos el forEach
+    resultSeccion.forEach(secciones=>{
+        //Añadimos solo las secciones accediendo al atributo sección del JSON
+        seleccion.add(secciones.properties.seccion_i);
+        //Como únicamente nos está añadiendo los valores que no se repiten, más tarde podremos directamente crear un select con estos datos sin volver a tocar el Set (a menos que queramos ordenarlos alfabéticamente)
+    });
+    
+    //Ahora vamos a realizar un forEach a cada elemento del ArrayList para añadirlo al select original
+
+    seleccion.forEach(options=>{
+
+        //Creamos una opción por cada elemento que va a tener nuestro select
+        let secciones = document.createElement("option");
+        //Le añadimos el valor dentro del forEach a esa nueva sección
+        secciones.innerText = options;
+        //Finalmente añadimos al select nuestro nuevo option
+        opciones.appendChild(secciones);
+
+    });
+    //Aplicamos el elemento opciones dentro del div con clase filtro
+    document.querySelector(".filtro").insertBefore(opciones,document.querySelector('form'));
+}
 
 function buscador(){
     //Guardamos en una variable el div resultados para rellenarlos más adelante
@@ -62,9 +96,7 @@ function buscador(){
         if((fallas.properties.anyo_fundacion>=desde&&fallas.properties.anyo_fundacion<=hasta)||(desde==''&&hasta=='')){
             //Creamos el div class="fallas"
             let falla = document.createElement("div");
-
             let puntuacion = document.createElement("form");
-            
             let ip = document.createElement("input");
             let idFalla  = document.createElement("input");
             let sub = document.createElement("input");
@@ -84,17 +116,19 @@ function buscador(){
             ip.name = 'ip';
             ip.value = '129.23.5.4';
 
+            //Creamos las puntuaciones
             for(let n = 0;n<5;n++){
                 let stars = document.createElement("label");
+                let punt = document.createElement("input");
 
-            let punt = document.createElement("input");
-
+                //Asociamos las puntuaciones con las fallas
                 punt.type='radio';
                 punt.id='star'+n+fallas.properties.id;
                 punt.value=n;
-
+                //Creamos los label de los input radio
                 stars.htmlFor = 'star'+n+fallas.properties.id;
                 stars.innerHTML = '★';
+
                 puntuacion.appendChild(punt);
                 puntuacion.appendChild(stars);
             }
@@ -164,9 +198,12 @@ async function init(){
     //document.querySelector("").addEventListener("click",ubicacion);
     document.querySelector("select").addEventListener("change",buscador);
     document.getElementById("hasta").addEventListener("change",buscador);
+    let tipoFallas = document.getElementsByName("tipoFalla");
+    tipoFallas[0].addEventListener("change",buscador);
+    tipoFallas[1].addEventListener("change",buscador);
     document.getElementById("desde").addEventListener("change",buscador);
     document.getElementById("principal").addEventListener("click",buscador);
-    document.getElementById("infantil").addEventListener("click",buscador);
+    document.getElementById("infantil").addEventListener("click",seccionesInfantiles);
     
 }
 
