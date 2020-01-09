@@ -2,6 +2,8 @@ let opciones = document.createElement("select");
 let respuestaFallitas;
 let url = 'http://mapas.valencia.es/lanzadera/opendata/Monumentos_falleros/JSON';
 
+
+
 function secciones(){
     opciones.innerHTML = "";
     //Definimos una variable como 'Set' que es un tipo de ArrayList que sólo nos añade los valores que no se repitan dentro de un array
@@ -36,7 +38,7 @@ function secciones(){
     document.querySelector(".filtro").insertBefore(opciones,document.querySelector('form'));
 }
 function seccionesInfantiles(){
-    options.innerHTML="";
+    opciones.innerHTML="";
     //Definimos una variable como 'Set' que es un tipo de ArrayList que sólo nos añade los valores que no se repitan dentro de un array
     let seleccion = new Set;
 
@@ -77,17 +79,21 @@ function buscador(){
     //Guardamos los valores para los filtros de año de creación
     let desde = document.getElementById("desde").value;
     let hasta = document.getElementById("hasta").value;
-    console.log(desde);
-    console.log(hasta);
+
+
     //Vaciamos el contenedor 'resultados' para volverlo a rellenar
     document.querySelector(".resultados").innerHTML = "";
 
     //Definimos el objeto result con la respuesta del JSON dependiendo de la sección que tenga seleccionada, si el valor del select es 'Todas' entonces no se le aplicará ningún filtro al objeto
     if(opciones.value==="Todas"){
         result = respuestaFallitas.features;
+
     }else{
     //Si estamos intentando recuperar las fallas de una determinada función, definiremos result con la función filter y le pasaremos como parámetro nuestra función filtrarSecciones    
         result = respuestaFallitas.features.filter(filtrarSecciones);
+        if(document.getElementsByName("tipoFalla")[1].checked){
+
+        }
     }
     //Empezamos el forEach de result para tratar los datos    
     result.forEach(fallas=>{
@@ -117,17 +123,19 @@ function buscador(){
             ip.value = '129.23.5.4';
 
             //Creamos las puntuaciones
-            for(let n = 0;n<5;n++){
+            for(let n = 0, y=5;n<5;n++,y--){
                 let stars = document.createElement("label");
                 let punt = document.createElement("input");
 
                 //Asociamos las puntuaciones con las fallas
                 punt.type='radio';
                 punt.id='star'+n+fallas.properties.id;
-                punt.value=n;
+                punt.value=y;
+                punt.setAttribute('idFalla',fallas.properties.id);
                 //Creamos los label de los input radio
                 stars.htmlFor = 'star'+n+fallas.properties.id;
                 stars.innerHTML = '★';
+                stars.addEventListener('mouseup',anotarPuntuaciones);
 
                 puntuacion.appendChild(punt);
                 puntuacion.appendChild(stars);
@@ -152,6 +160,14 @@ function buscador(){
         //Finalmente añadimos cada elemento del forEach al div resultados
         
     });
+    let puntis = document.querySelectorAll('★');
+    console.log(puntis);
+}
+
+function anotarPuntuaciones(){
+    let puntos = this.previousSibling.value;
+    let id = this.previousSibling.attributes.idFalla.value;
+    console.log(id);
 }
 
 function ubicacion(){
@@ -161,8 +177,14 @@ function ubicacion(){
 function filtrarSecciones(elemento){
     //Recuperamos el valor actual del select
     let valor = document.querySelector("select");
+    let resultado;
+    if(document.getElementsByName("tipoFalla")[1].checked){
+        resultado = elemento.properties.seccion_i.startsWith(valor.value);
+    }else{
+        resultado = elemento.properties.seccion.startsWith(valor.value);
+    }
     //Lo devolvemos para aplicar el filtro
-    return elemento.properties.seccion.startsWith(valor.value);
+    return resultado;
 }
 
 function recuperarDatos(){
@@ -174,9 +196,8 @@ function recuperarDatos(){
     });
 }
 
-
 //Pruebas para cruzar datos con otra API del ayuntamiento de Valencia
-function recuperarBarracas(){
+/*function recuperarBarracas(){
 
     fetch('http://mapas.valencia.es/lanzadera/opendata/falla_barracas/JSON').then(responseBarracas=> responseBarracas.json())
     .then(respuestaBarracas=>{
@@ -184,10 +205,10 @@ function recuperarBarracas(){
     });
 
 }
-
+*/
 //Definimos init como función asíncrona ya que si no lo fuese tendríamos problemas a la hora de generar el select, tratando antes de rellenar el select sin tener los datos
 async function init(){
-    recuperarBarracas();
+    //recuperarBarracas();
     //Le decimos que se espere a recoger los datos del JSON antes de continuar con la generación del documento, ya que si no nos podría dar problemas a la hora de crear elementos sin contenido
     await recuperarDatos();
     document.querySelector(".filtro").appendChild(opciones);
@@ -199,11 +220,12 @@ async function init(){
     document.querySelector("select").addEventListener("change",buscador);
     document.getElementById("hasta").addEventListener("change",buscador);
     let tipoFallas = document.getElementsByName("tipoFalla");
-    tipoFallas[0].addEventListener("change",buscador);
-    tipoFallas[1].addEventListener("change",buscador);
+    tipoFallas[0].addEventListener("click",secciones);
+    tipoFallas[1].addEventListener("click",seccionesInfantiles);
     document.getElementById("desde").addEventListener("change",buscador);
-    document.getElementById("principal").addEventListener("click",buscador);
-    document.getElementById("infantil").addEventListener("click",seccionesInfantiles);
+
+    //document.getElementById("principal").addEventListener("click",buscador);
+    //document.getElementById("infantil").addEventListener("click",buscador);
     
 }
 
