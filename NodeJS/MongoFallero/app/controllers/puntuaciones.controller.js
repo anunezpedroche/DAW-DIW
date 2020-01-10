@@ -41,12 +41,33 @@ exports.create = (req,res)=>{
 };
 
 exports.findOne = (req,res)=>{
-    Puntuacion.findOne({idFalla:req.params.idFalla}).then(puntuaciones=>{
-        console.log(req.params);
+    Puntuacion.find({'idFalla':req.params.idFalla,'ip':req.params.ip}).then(puntuaciones=>{
+        //console.log(req.params);
         res.send(puntuaciones);
     }).catch(err=>{
         res.status(500).send({
             message: err.message || " Algo fue mal mientras los capturabamos a todos"
         });
     });
+};
+
+exports.votadas = (req,res)=>{
+    Puntuacion.find({'idFalla':req.params.idFalla,'ip':req.params.ip}).then(votadas=>{
+        if(votadas=='') res.send(false);
+        else res.send(coincidencias);
+    }).catch(err=>{
+        res.status(500).send({
+            message: err.message || 'Algo fue mal durante la captura de datos'
+        });
+    });
+};
+
+exports.update = (req,res)=>{
+    let puntuacionId = req.params.puntuacionId;
+    let update = req.body;
+
+    Puntuacion.findByIdAndUpdate(puntuacionId,update,(err,puntuacionUpdated)=>{
+        if(err) res.status(500).send({message: `Error actualizando puntuación: ${err}`})
+        res.status(200).send({product:puntuacionUpdated})
+    })
 };

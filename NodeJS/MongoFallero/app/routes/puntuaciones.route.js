@@ -10,8 +10,11 @@ module.exports = (app) => {
     // Retrieve a single puntuaciones with puntuacionId
     app.get('/api/puntuaciones/:idFalla', puntuaciones.findOne);
 
+    // Retrieve true or false if vote exists
+    app.get('/api/puntuaciones/votadas/:idFalla/:ip', puntuaciones.findOne);
+
     // Update a puntuaciones with puntuacionId
-    //app.put('/puntuaciones/:puntuacionId', puntuaciones.update);
+    app.put('/api/puntuaciones/:puntuacionId', puntuaciones.update);
 
     // Delete a puntuaciones with puntuacionId
     //app.delete('/puntuaciones/:puntuacionId', puntuaciones.delete);

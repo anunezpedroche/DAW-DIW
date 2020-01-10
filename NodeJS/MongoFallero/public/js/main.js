@@ -1,6 +1,7 @@
 let opciones = document.createElement("select");
 let respuestaFallitas;
 let url = 'http://mapas.valencia.es/lanzadera/opendata/Monumentos_falleros/JSON';
+let ipCliente;
 
 
 
@@ -163,10 +164,42 @@ function buscador(){
     let puntis = document.querySelectorAll('★');
     console.log(puntis);
 }
+ 
+function conexionServer(url, metodo, datos, mensaje) {
+    console.log(url,metodo,datos,mensaje);
+    fetch(url, {
+        method: metodo,
+        body: JSON.stringify(datos),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => res.json())
+        .catch(error => console.error('Error:', error))
+        .then(alert(mensaje));
+
+}
+
 
 function anotarPuntuaciones(){
     let puntos = this.previousSibling.value;
     let id = this.previousSibling.attributes.idFalla.value;
+    let url;
+    let data = {idFalla: id, ip: ipCliente, puntuacion: puntos};
+
+    fetch('/api/puntuaciones/votadas/'+id+'/'+ipCliente).then(function(response){
+        return response.json();
+    }).then(function (myJson){
+        
+        
+        
+        if(myJson==false){
+            url = '/api/puntuaciones/';
+            conexionServer(url,'POST',data,'Puntuación enviada');
+        }else{
+            url = '/api/puntuaciones/'+myJson[0]._id;
+            conexionServer(url,'PUT',data,'Puntuación modificada');
+        }
+    });
     console.log(id);
 }
 
@@ -226,7 +259,13 @@ async function init(){
 
     //document.getElementById("principal").addEventListener("click",buscador);
     //document.getElementById("infantil").addEventListener("click",buscador);
-    
+    getIP();
 }
+
+function getIP(json){
+    if(json!=undefined) ipCliente = json.ip;
+
+}
+
 
 window.onload=init;
