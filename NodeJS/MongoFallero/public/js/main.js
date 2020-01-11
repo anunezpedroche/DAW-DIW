@@ -38,6 +38,7 @@ function secciones(){
     //Aplicamos el elemento opciones dentro del div con clase filtro
     document.querySelector(".filtro").insertBefore(opciones,document.querySelector('form'));
 }
+
 function seccionesInfantiles(){
     opciones.innerHTML="";
     //Definimos una variable como 'Set' que es un tipo de ArrayList que sólo nos añade los valores que no se repitan dentro de un array
@@ -163,6 +164,8 @@ function buscador(){
     });
     let puntis = document.querySelectorAll('★');
     console.log(puntis);
+
+    obtenerPuntuacionesFallas();
 }
  
 function conexionServer(url, metodo, datos, mensaje) {
@@ -179,6 +182,61 @@ function conexionServer(url, metodo, datos, mensaje) {
 
 }
 
+function obtenerPuntuacionesFallas(){
+
+    conectarBBDD('/api/puntuaciones',mostrarPuntuaciones);
+
+}
+
+function conectarBBDD(url,funcion){
+
+    fetch(url).then(function (respuesta){
+        return respuesta.json();
+    }).then(function (myJson){
+        funcion(myJson);
+    });
+
+}
+
+function mostrarPuntuaciones(datos){
+
+    let arrayFallas = [];
+
+    for(let i = 0; i<datos.length;i++){
+
+        let idFalla = datos[i].idFalla;
+        let puntos = datos[i].puntuacion;
+        let ip = datos[i].ip;
+
+        let falla = devolverPuntuaciones(idFalla,arrayFallas);
+
+        if(falla !=''){
+            falla.vecesVotada++;
+            falla.media = falla.puntosTotales / falla.vecesVotada;
+        } else {
+            let falla = new Falla(idFalla,puntos,1,puntos,ip);
+            arrayFallas.push(falla);
+        }
+        console.log(arrayFallas);
+
+    }
+
+}
+
+function devolverPuntuaciones(idFalla,arrayFalla){
+
+    let falla='';
+
+    for(let i = 0; i < arrayFalla.length;i++){
+
+        if(idFalla == arrayFalla[i].idFalla){
+            falla = arrayFalla[i];
+        }
+
+    }
+
+    return falla;
+}
 
 function anotarPuntuaciones(){
     let puntos = this.previousSibling.value;
@@ -239,6 +297,7 @@ function recuperarDatos(){
 
 }
 */
+
 //Definimos init como función asíncrona ya que si no lo fuese tendríamos problemas a la hora de generar el select, tratando antes de rellenar el select sin tener los datos
 async function init(){
     //recuperarBarracas();
@@ -263,9 +322,19 @@ async function init(){
 }
 
 function getIP(json){
+
     if(json!=undefined) ipCliente = json.ip;
 
 }
 
+function Falla(idFalla = 0,puntosTotales = 0, vecesVotada = 0, media= 0, ip = '0'){
+
+    this.idFalla = idFalla;
+    this.puntosTotales = puntosTotales;
+    this.vecesVotada = vecesVotada;
+    this.media = media;
+    this.ip = ip;
+
+}
 
 window.onload=init;

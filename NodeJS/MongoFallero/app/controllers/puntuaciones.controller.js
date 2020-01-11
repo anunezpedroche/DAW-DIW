@@ -16,10 +16,8 @@ exports.findAll = (req,res) => {
 
 // Crear y salvar
 exports.create = (req,res)=>{
-    console.log(req.body);
     // Validamos el puntuacion
     if (!req.body){
-        console.log(req.body);
         return res.status(400).send({
            message:"puntuacion Vacio..." 
         });
@@ -65,7 +63,7 @@ exports.votadas = (req,res)=>{
 exports.update = (req,res)=>{
     let puntuacionId = req.params.puntuacionId;
     let update = req.body;
-
+    console.log(req.body);
     Puntuacion.findByIdAndUpdate(puntuacionId,update,(err,puntuacionUpdated)=>{
         if(err) res.status(500).send({message: `Error actualizando puntuación: ${err}`})
         res.status(200).send({product:puntuacionUpdated})
