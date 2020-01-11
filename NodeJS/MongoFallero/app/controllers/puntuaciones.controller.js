@@ -38,6 +38,17 @@ exports.create = (req,res)=>{
     });
 };
 
+exports.buscaUna = (req,res)=>{
+    Puntuacion.find({'idFalla':req.params.idFalla}).then(puntuaciones=>{
+        //console.log(req.params);
+        res.send(puntuaciones);
+    }).catch(err=>{
+        res.status(500).send({
+            message: err.message || " Algo fue mal mientras los capturabamos a todos"
+        });
+    });
+};
+
 exports.findOne = (req,res)=>{
     Puntuacion.find({'idFalla':req.params.idFalla,'ip':req.params.ip}).then(puntuaciones=>{
         //console.log(req.params);

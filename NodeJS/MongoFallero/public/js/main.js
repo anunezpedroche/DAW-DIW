@@ -37,6 +37,7 @@ function secciones(){
     });
     //Aplicamos el elemento opciones dentro del div con clase filtro
     document.querySelector(".filtro").insertBefore(opciones,document.querySelector('form'));
+    buscador();
 }
 
 function seccionesInfantiles(){
@@ -71,6 +72,7 @@ function seccionesInfantiles(){
     });
     //Aplicamos el elemento opciones dentro del div con clase filtro
     document.querySelector(".filtro").insertBefore(opciones,document.querySelector('form'));
+    buscador();
 }
 
 function buscador(){
@@ -163,13 +165,11 @@ function buscador(){
         
     });
     let puntis = document.querySelectorAll('★');
-    console.log(puntis);
 
     obtenerPuntuacionesFallas();
 }
- 
+//Método genérico para conectar con mongo
 function conexionServer(url, metodo, datos, mensaje) {
-    console.log(url,metodo,datos,mensaje);
     fetch(url, {
         method: metodo,
         body: JSON.stringify(datos),
@@ -181,7 +181,7 @@ function conexionServer(url, metodo, datos, mensaje) {
         .then(alert(mensaje));
 
 }
-
+//Usamos el método anterior para que devuelva los resultados la función mostrarPuntuaciones
 function obtenerPuntuacionesFallas(){
 
     conectarBBDD('/api/puntuaciones',mostrarPuntuaciones);
@@ -197,9 +197,9 @@ function conectarBBDD(url,funcion){
     });
 
 }
-
+//Recogemos los datos de todas las fallas y los metemos en un array para tratar su puntuación
 function mostrarPuntuaciones(datos){
-
+    //console.log(datos);
     let arrayFallas = [];
 
     for(let i = 0; i<datos.length;i++){
@@ -207,18 +207,31 @@ function mostrarPuntuaciones(datos){
         let idFalla = datos[i].idFalla;
         let puntos = datos[i].puntuacion;
         let ip = datos[i].ip;
-
+        //console.log(puntos);
         let falla = devolverPuntuaciones(idFalla,arrayFallas);
-
+        //console.log(falla);
+        //console.log(falla[1]);
         if(falla !=''){
             falla.vecesVotada++;
+            falla.puntosTotales = falla.puntosTotales + puntos;
             falla.media = falla.puntosTotales / falla.vecesVotada;
         } else {
             let falla = new Falla(idFalla,puntos,1,puntos,ip);
             arrayFallas.push(falla);
-        }
-        console.log(arrayFallas);
-
+        } 
+    }
+    //console.log(arrayFallas[10]);
+    for(let i = 0; i<arrayFallas.length;i++){
+        //console.log(arrayFallas[1].media);
+        let puntos = Math.round(arrayFallas[i].media);
+        let puntacos = 5 - puntos;
+        let cuadroFalla = document.getElementById(arrayFallas[i].idFalla);
+        let puntuacion = document.getElementById('star'+puntacos+arrayFallas[i].idFalla);
+        
+        puntuacion.checked = true;
+        
+        //console.log(puntuacion);
+        //console.log(puntos);
     }
 
 }
@@ -234,7 +247,7 @@ function devolverPuntuaciones(idFalla,arrayFalla){
         }
 
     }
-
+    //console.log(arrayFalla);
     return falla;
 }
 
@@ -258,7 +271,6 @@ function anotarPuntuaciones(){
             conexionServer(url,'PUT',data,'Puntuación modificada');
         }
     });
-    console.log(id);
 }
 
 function ubicacion(){
@@ -282,7 +294,6 @@ function recuperarDatos(){
     //Recuperamos los datos del JSON y los devolvemos a una variable para tratarla de forma más cómoda y más rápido que mediante el fetch en la función buscador
     return fetch(url).then(responseFallas => responseFallas.json())
     .then(respuestaFallas =>{
-        console.log(respuestaFallas);
         respuestaFallitas = respuestaFallas;
     });
 }
@@ -303,6 +314,7 @@ async function init(){
     //recuperarBarracas();
     //Le decimos que se espere a recoger los datos del JSON antes de continuar con la generación del documento, ya que si no nos podría dar problemas a la hora de crear elementos sin contenido
     await recuperarDatos();
+    //crearPtosFicticios();
     document.querySelector(".filtro").appendChild(opciones);
     buscador();
     secciones();
@@ -326,7 +338,43 @@ function getIP(json){
     if(json!=undefined) ipCliente = json.ip;
 
 }
+/*
+function crearPtosFicticios() {
+    let datosJSON = respuestaFallitas;
+    var url = '/api/puntuaciones';
+    let ptos;
+    let datos;
+    let ip = 1000;
+    let listaIdsFalla = new Set();
 
+    //averiguamos todos los idFalla que existen en el JSON para asignarles puntuaciones
+    for (let i = 0; i < datosJSON.features.length; i++) {
+
+        listaIdsFalla.add(datosJSON.features[i].properties.id);
+
+    }
+
+    for (let id of listaIdsFalla) {
+
+        for (let x = 0; x < 3; x++) {
+
+            ip++;
+            //Puntuamos del 1 al 5 de forma aletaroia
+            ptos = Math.floor(Math.random() * (6 - 1)) + 1;
+            datos = { idFalla: id, ip: ip, puntuacion: ptos };
+
+            fetch(url, {
+                method: 'POST',
+                body: JSON.stringify(datos),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json())
+                .catch(error => console.error('Error:', error));
+        }
+    }
+}
+*/
 function Falla(idFalla = 0,puntosTotales = 0, vecesVotada = 0, media= 0, ip = '0'){
 
     this.idFalla = idFalla;

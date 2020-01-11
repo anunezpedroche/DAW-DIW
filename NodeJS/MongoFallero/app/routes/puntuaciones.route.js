@@ -8,7 +8,7 @@ module.exports = (app) => {
     app.get('/api/puntuaciones', puntuaciones.findAll);
 
     // Retrieve a single puntuaciones with puntuacionId
-    app.get('/api/puntuaciones/:idFalla', puntuaciones.findOne);
+    app.get('/api/puntuaciones/:idFalla', puntuaciones.buscaUna);
 
     // Retrieve true or false if vote exists
     app.get('/api/puntuaciones/votadas/:idFalla/:ip', puntuaciones.findOne);
