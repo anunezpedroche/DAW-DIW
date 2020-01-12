@@ -1,3 +1,4 @@
+//Variables globales
 let opciones = document.createElement("select");
 let respuestaFallitas;
 let url = 'http://mapas.valencia.es/lanzadera/opendata/Monumentos_falleros/JSON';
@@ -110,8 +111,8 @@ function buscador(){
             let ip = document.createElement("input");
             let idFalla  = document.createElement("input");
             let sub = document.createElement("input");
-            
-
+            let imgFalla = document.createElement("div");
+            let img = document.createElement("img");
             puntuacion.method='post';
             puntuacion.action='/api/puntuaciones/';
 
@@ -140,7 +141,8 @@ function buscador(){
                 stars.htmlFor = 'star'+n+fallas.properties.id;
                 stars.innerHTML = '★';
                 stars.addEventListener('mouseup',anotarPuntuaciones);
-
+                stars.addEventListener('mouseover',quitarEstrellas);
+                
                 puntuacion.appendChild(punt);
                 puntuacion.appendChild(stars);
             }
@@ -148,24 +150,32 @@ function buscador(){
 
             puntuacion.appendChild(idFalla);
             puntuacion.appendChild(ip);
-            //puntuacion.appendChild(sub);
-
+            
             falla.className ="fallas";
             //Comprobamos cuál es el radioButton (Infantil o Principal) que está seleccionado para devolver unos valores u otros
             if(document.getElementById("principal").checked){
-                falla.innerHTML=fallas.properties.nombre+"<img src="+fallas.properties.boceto+"></img><br>";
+
+                img.setAttribute('idFalla', fallas.properties.id);
+                img.src = fallas.properties.boceto;
+                falla.innerHTML=fallas.properties.nombre;
+
             }else if(document.getElementById("infantil").checked){
-                falla.innerHTML="<img src="+fallas.properties.boceto_i+"></img><br>"+fallas.properties.nombre+" -- "+fallas.properties.sector+" -- "+fallas.properties.seccion_i;
+
+                img.setAttribute('idFalla', fallas.properties.id);
+                img.src = fallas.properties.boceto_i;
+                falla.innerHTML=fallas.properties.nombre;
+
             }
             falla.id=fallas.properties.id;
+            
+            falla.appendChild(img);
             falla.appendChild(puntuacion);
             listar.appendChild(falla);
         }
         //Finalmente añadimos cada elemento del forEach al div resultados
         
     });
-    let puntis = document.querySelectorAll('★');
-
+    recuperarImg();
     obtenerPuntuacionesFallas();
 }
 //Método genérico para conectar con mongo
@@ -199,7 +209,6 @@ function conectarBBDD(url,funcion){
 }
 //Recogemos los datos de todas las fallas y los metemos en un array para tratar su puntuación
 function mostrarPuntuaciones(datos){
-    //console.log(datos);
     let arrayFallas = [];
 
     for(let i = 0; i<datos.length;i++){
@@ -207,33 +216,39 @@ function mostrarPuntuaciones(datos){
         let idFalla = datos[i].idFalla;
         let puntos = datos[i].puntuacion;
         let ip = datos[i].ip;
-        //console.log(puntos);
         let falla = devolverPuntuaciones(idFalla,arrayFallas);
-        //console.log(falla);
-        //console.log(falla[1]);
+
         if(falla !=''){
+
             falla.vecesVotada++;
             falla.puntosTotales = falla.puntosTotales + puntos;
             falla.media = falla.puntosTotales / falla.vecesVotada;
+
         } else {
+
             let falla = new Falla(idFalla,puntos,1,puntos,ip);
             arrayFallas.push(falla);
+
         } 
     }
-    //console.log(arrayFallas[10]);
+
     for(let i = 0; i<arrayFallas.length;i++){
-        //console.log(arrayFallas[1].media);
         let puntos = Math.round(arrayFallas[i].media);
         let puntacos = 5 - puntos;
         let cuadroFalla = document.getElementById(arrayFallas[i].idFalla);
         let puntuacion = document.getElementById('star'+puntacos+arrayFallas[i].idFalla);
         
-        puntuacion.checked = true;
-        
-        //console.log(puntuacion);
-        //console.log(puntos);
+        if(puntuacion !== null){
+            puntuacion.checked = true;
+        }else{
+
+        }
     }
 
+}
+
+function quitarEstrellas(star){
+    return star.target.control.checked = false;
 }
 
 function devolverPuntuaciones(idFalla,arrayFalla){
@@ -247,7 +262,6 @@ function devolverPuntuaciones(idFalla,arrayFalla){
         }
 
     }
-    //console.log(arrayFalla);
     return falla;
 }
 
@@ -273,8 +287,92 @@ function anotarPuntuaciones(){
     });
 }
 
+function recuperarImg(){
+    let imgs = document.querySelectorAll('img');
+    for(let i = 0; i<imgs.length;i++){
+        imgs[i].addEventListener('click',ubicacion);
+    }
+}
+
 function ubicacion(){
-    console.log('hola');
+    let id = this.parentNode.id;
+    let arrayUbicaciones = respuestaFallitas.features;
+
+    for(let a = 0;a<arrayUbicaciones.length;a++){
+        if(id==arrayUbicaciones[a].properties.id){
+
+            let coordenadas = arrayUbicaciones[a].geometry.coordinates;
+            coordenadas = convertirCoordenada(coordenadas);
+            
+            let divFullScreen = document.createElement('div');
+            divFullScreen.setAttribute('id', 'fullScreen');
+            divFullScreen.classList.add('opacidad');
+
+            let divMapa = document.createElement('div');
+            divMapa.setAttribute('id', 'map');
+        
+            let i = document.createElement('i');
+            i.classList.add("far", "fa-times-circle");
+            i.addEventListener('click', cierraVentanaEmergente);
+            divFullScreen.appendChild(i);
+
+                    
+            divFullScreen.appendChild(divMapa);
+            document.querySelector('body').appendChild(divFullScreen);
+                
+            //Bloquea scroll tras cerrar ventana emergente
+            document.getElementsByTagName("html")[0].style.overflow = "hidden";
+
+            let altura = window.screen.height;
+            let anchura = window.screen.width;
+
+            console.log(altura + " " + anchura);
+            let y = window.scrollY;
+            let x = 0;
+
+            divFullScreen.style.left = x + 'px';
+            divFullScreen.style.top = y + 'px';
+
+            let map = L.map('map').
+                setView([coordenadas[0], coordenadas[1]],
+                    14);
+
+
+            L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,' +
+                    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://cloudmade.com">CloudMade</a>',
+                maxZoom: 18
+            }).addTo(map);
+
+            L.marker([coordenadas[0], coordenadas[1]]).addTo(map);
+
+            L.control.scale().addTo(map);    
+        }
+    }
+
+    
+}
+
+function cierraVentanaEmergente(){
+
+    let div = document.getElementById('fullScreen');
+    let body = document.querySelector('body');
+
+    body.removeChild(div);
+
+    //Permite scroll tras cerrar ventana emergente
+    document.getElementsByTagName("html")[0].style.overflow = "auto";
+
+}
+
+function convertirCoordenada(coordenadas) {
+
+    let firstProjection = '+proj=utm +zone=30 +ellps=GRS80 +units=m +no_defs';
+    let secondProjection = '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs';
+
+    nuevaCoordenada = proj4(firstProjection, secondProjection, coordenadas);
+
+    return [nuevaCoordenada[1], nuevaCoordenada[0]];
 }
 
 function filtrarSecciones(elemento){
@@ -298,24 +396,13 @@ function recuperarDatos(){
     });
 }
 
-//Pruebas para cruzar datos con otra API del ayuntamiento de Valencia
-/*function recuperarBarracas(){
-
-    fetch('http://mapas.valencia.es/lanzadera/opendata/falla_barracas/JSON').then(responseBarracas=> responseBarracas.json())
-    .then(respuestaBarracas=>{
-        respuestaBarraquitas = respuestaBarracas;
-    });
-
-}
-*/
-
 //Definimos init como función asíncrona ya que si no lo fuese tendríamos problemas a la hora de generar el select, tratando antes de rellenar el select sin tener los datos
 async function init(){
-    //recuperarBarracas();
     //Le decimos que se espere a recoger los datos del JSON antes de continuar con la generación del documento, ya que si no nos podría dar problemas a la hora de crear elementos sin contenido
     await recuperarDatos();
     //crearPtosFicticios();
-    document.querySelector(".filtro").appendChild(opciones);
+    opciones.classList.add("selector");
+    document.querySelector(".filters").appendChild(opciones);
     buscador();
     secciones();
 
@@ -327,7 +414,6 @@ async function init(){
     tipoFallas[0].addEventListener("click",secciones);
     tipoFallas[1].addEventListener("click",seccionesInfantiles);
     document.getElementById("desde").addEventListener("change",buscador);
-
     //document.getElementById("principal").addEventListener("click",buscador);
     //document.getElementById("infantil").addEventListener("click",buscador);
     getIP();
@@ -375,6 +461,7 @@ function crearPtosFicticios() {
     }
 }
 */
+
 function Falla(idFalla = 0,puntosTotales = 0, vecesVotada = 0, media= 0, ip = '0'){
 
     this.idFalla = idFalla;
