@@ -2,9 +2,14 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const bodyParser = require('body-parser');
+const dbConfig = require('./MongoFallero/config/database.config')
+let port = process.env.PORT;
+if(port==null|| port==""){
+    port = 3000;
+}
 
 //Conexión MongoDB
-const dbConfig = require('./MongoFallero/config/database.config');
+//const dbConfig = require('mongodb+srv://adminFallero:mongo1234@cluster0-yzrtq.mongodb.net/test?retryWrites=true&w=majority');
 const mongoose = require('mongoose');
 
 app.use(bodyParser.urlencoded({
@@ -23,8 +28,6 @@ mongoose.connect(dbConfig.url,{
         process.exit();
     });
 
-
-
 // Paginas publicas (estaticas)
 
 app.use(express.static(path.join(__dirname, 'MongoFallero/public')));
@@ -32,7 +35,7 @@ app.use(express.static(path.join(__dirname, 'MongoFallero/public')));
 
 require('./MongoFallero/app/routes/puntuaciones.route.js')(app);
 
-app.listen(3000,() => {
+app.listen(port,() => {
     console.log(" * MongoFallero Running en http://localhost:3001");
 });
 

@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "scss": "node-sass -watch scss -o \"public/css/\"",
-    "jefe": "nodemon server.js"
+    "jefe": "nodemon server.js",
+    "start": "node server.js"
   },
   "keywords": [
     "Simple",
@@ -20,6 +21,7 @@
     "mongodb": "^3.4.1",
     "mongoose": "^5.8.7",
     "node-sass": "^4.13.0",
+    "nodemon": "^2.0.2",
     "proj4": "^2.6.0"
   },
   "devDependencies": {
